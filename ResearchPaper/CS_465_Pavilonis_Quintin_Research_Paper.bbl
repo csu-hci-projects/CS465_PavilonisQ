@@ -1,0 +1,120 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{6}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{} and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showURL}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showURL #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[Huang(2024)]%
+        {huang2024enhancing}
+\bibfield{author}{\bibinfo{person}{Rangpei Huang}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Enhancing Well-being and User Experience: Electric
+  Sticky Notes, UI Design Colors, Login Preferences, and Clear Webpages}.
+\newblock \bibinfo{journal}{\emph{Highlights in Science, Engineering and
+  Technology}}  \bibinfo{volume}{85} (\bibinfo{date}{03} \bibinfo{year}{2024}),
+  \bibinfo{pages}{816--823}.
+\newblock
+\showISSN{2791-0210}
+\href{https://doi.org/10.54097/demxws42}{doi:\nolinkurl{10.54097/demxws42}}
+
+
+\bibitem[Keene(2018)]%
+        {keene2018building}
+\bibfield{author}{\bibinfo{person}{Sam Keene}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Building UI in VR}.
+\newblock In \bibinfo{booktitle}{\emph{Google Daydream VR Cookbook}}.
+  \bibinfo{publisher}{Pearson Education, Limited}, \bibinfo{address}{United
+  States}.
+\newblock
+\showISBNx{9780134845517}
+
+
+\bibitem[Radianti et~al\mbox{.}(2020)]%
+        {radianti2020}
+\bibfield{author}{\bibinfo{person}{J. Radianti}, \bibinfo{person}{T.~A.
+  Majchrzak}, \bibinfo{person}{J. Fromm}, {and} \bibinfo{person}{I.
+  Wohlgenannt}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{A systematic review of immersive virtual reality
+  applications for higher education: Design elements, lessons learned, and
+  research agenda}.
+\newblock \bibinfo{journal}{\emph{Computers \& Education}}
+  \bibinfo{volume}{147} (\bibinfo{year}{2020}), \bibinfo{pages}{103778}.
+\newblock
+
+
+\bibitem[Slavova and Mu(2018)]%
+        {slavova2018comparative}
+\bibfield{author}{\bibinfo{person}{Yoana Slavova} {and} \bibinfo{person}{Mu
+  Mu}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{A Comparative Study of the Learning Outcomes and
+  Experience of VR in Education}. In \bibinfo{booktitle}{\emph{2018 IEEE
+  Conference on Virtual Reality and 3D User Interfaces (VR)}}.
+  \bibinfo{publisher}{IEEE}, \bibinfo{address}{Reutlingen, Germany},
+  \bibinfo{pages}{685--686}.
+\newblock
+\showISBNx{978-1-5386-3365-6}
+\href{https://doi.org/10.1109/VR.2018.8446486}{doi:\nolinkurl{10.1109/VR.2018.8446486}}
+
+
+\bibitem[Wen(2021)]%
+        {wen2021color}
+\bibfield{author}{\bibinfo{person}{Guoying Wen}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Research on Color Design Principles of UI Interface
+  of Mobile Applications Based on Vision}. In \bibinfo{booktitle}{\emph{2021
+  IEEE International Conference on Advances in Electrical Engineering and
+  Computer Applications (AEECA)}}. \bibinfo{publisher}{IEEE},
+  \bibinfo{address}{Dalian, China}, \bibinfo{pages}{539--542}.
+\newblock
+\showISBNx{978-1-6654-3561-1}
+\href{https://doi.org/10.1109/AEECA52519.2021.9574226}{doi:\nolinkurl{10.1109/AEECA52519.2021.9574226}}
+
+
+\bibitem[Yang et~al\mbox{.}(2021)]%
+        {yang2021effect}
+\bibfield{author}{\bibinfo{person}{Wenya Yang}, \bibinfo{person}{Qing Li},
+  {and} \bibinfo{person}{Xue Wang}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{The Effect of PowerPoint Theme Color on Learners'
+  Learning Effectiveness and Emotions}. In \bibinfo{booktitle}{\emph{2021 IEEE
+  24th International Conference on Computer Supported Cooperative Work in
+  Design (CSCWD)}}. \bibinfo{publisher}{IEEE}, \bibinfo{address}{Dalian,
+  China}, \bibinfo{pages}{510--512}.
+\newblock
+\showISBNx{978-1-7281-6597-4}
+\href{https://doi.org/10.1109/CSCWD49262.2021.9437633}{doi:\nolinkurl{10.1109/CSCWD49262.2021.9437633}}
+
+
+\end{thebibliography}

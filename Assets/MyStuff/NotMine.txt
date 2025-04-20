@@ -1,0 +1,29 @@
+CODE/SCRIPTS/STUFF I USED THAT WAS NOT MINE AND DID NOT CHANGE:
+ - Unity VR Starter Template - used XR Origin controller/gaze/camera setup
+   (selected VR template upon creating new Unity project)
+ - Quick Outline Asset from Unity Store by Chris Nolet:    https://assetstore.unity.com/packages/tools/particles-effects/quick-outline-115488
+ - Checkmark png from unity store package "Art by Kandles" by Kandles:    https://assetstore.unity.com/packages/2d/gui/icons/basic-icons-139575
+
+
+
+
+SCRIPT IDEAS/RESOURCES USED:
+ - https://learn.unity.com/course/create-with-vr/unit/vr-events-and-interactions?   version=2022.3, from part 2
+
+Saving and loading object positions (for my TestManager):
+ - SAVE & LOAD MULTIPLE OBJECTS In Unity (With tips and debugging at end!):    https://www.youtube.com/watch?v=47QIUHDEaSY
+
+manager scripting tutorial:
+ - Managing Game Managers in Unity: https://www.youtube.com/watch?v=8RwVEpaoRCQ
+
+csv data write:
+ - Tutorial - Export data from Unity to .csv (which opens with Excel):          https://www.youtube.com/watch?v=JR4EMeJo55A
+ - https://sushanta1991.blogspot.com/2015/02/how-to-write-data-to-csv-file-in-         unity.html
+
+controller/headset input tracking:
+ - https://discussions.unity.com/t/vr-position-tracking/693722/2
+ - Unity VR : How to get Controller Data: https://www.youtube.com/watch?v=Kh_94glqO-0
+ - Unity XR Interaction Toolkit 3.0 Tutorial - Part 7 - Controller Tracking:          https://www.youtube.com/watch?v=M44edr-SNKc&t=631s
+
+variable reflection:
+ - https://medium.com/@Code_With_K/c-reflection-in-unity-a-complete-guide-for-game-   developers-bea6c7abaebf
