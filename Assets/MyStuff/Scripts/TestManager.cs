@@ -252,7 +252,7 @@ public class TestManager : MonoBehaviour
         checkMark.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
         checkMarks.Add(checkMark);
-        StartCoroutine(PulseScale(checkMark.transform)); //!!!!
+        StartCoroutine(PulseScale(checkMark.transform)); 
     }
 
     private IEnumerator PulseScale(Transform obj)

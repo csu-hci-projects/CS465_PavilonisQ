@@ -196,7 +196,7 @@ public class TestTimer : MonoBehaviour
 
         if (errorEvents[dataIndex].Count > 0)
         {
-            ErrorEvent lastError = errorEvents[dataIndex][errorEvents[dataIndex].Count - 1];
+            ErrorEvent lastError = errorEvents[dataIndex][errorEvents[dataIndex].Count - 1]; //needs to be fixed
             if (lastError.RecoveryTime == 0f)
             {
                 lastError.RecoveryTime = (Time.time - testStartTime) - lastError.TimeStamp;
