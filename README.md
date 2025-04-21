@@ -4,7 +4,7 @@
 
 ## Checkpoint 2 
 
-** Note To Grader **:
+# Note To Grader #:
  - The only steps I have not completed are the results section in research paper as I have not finished testing with participants. 
  - All files I have added are in Assets/MyStuff <br>
 [Checkpoint 2 Project Demonstration Video](https://youtu.be/PAyXtNHcipc) <br>
