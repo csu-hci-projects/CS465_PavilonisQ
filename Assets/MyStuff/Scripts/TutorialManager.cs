@@ -27,21 +27,6 @@ public class TutorialManager : MonoBehaviour
         }
 
         SetupXRInteractables();
-        LateStart();
-    }
-
-    void LateStart() // DIDNT END UP WORKING MAYBE
-    {
-        Invoke("DisableTooltips", 0.5f);
-    }
-
-    void DisableTooltips() // NOT WORKING IDK WHY, POSSIBLY LAZYTOOLTIPS FROM VR TEMPLATE
-    {
-        GameObject gazeSnapVolume = GameObject.Find("Gaze Snap Volume");
-        if (gazeSnapVolume != null)
-        {
-            gazeSnapVolume.SetActive(false);
-        }
     }
 
     private void SetupXRInteractables()
