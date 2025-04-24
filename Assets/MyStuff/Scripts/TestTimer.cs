@@ -157,7 +157,7 @@ public class TestTimer : MonoBehaviour
         }
     }
 
-    public void RecordError() // MAYBE STOPPED WORKKING WITH NEW EXPANDED ERORR OUTPUT, NEEDED?
+    public void RecordError()
     {
         if (currentTestIndex >= 0 && currentTestIndex < testErrorCounts.Length)
         {

@@ -38,7 +38,7 @@ public class SimpleSelectionManager : MonoBehaviour
 
     private void Start()
     {
-        // grab all icons with XR simple script (netowkr icons, buttons)
+        // grab all icons with XR simple script (network icons, menu buttons, color buttons)
         XRSimpleInteractable[] interactables = FindObjectsOfType<XRSimpleInteractable>();
 
         foreach (XRSimpleInteractable interactable in interactables)
