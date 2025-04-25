@@ -48,7 +48,6 @@ public class TestTimer : MonoBehaviour
         public int ColorIndex;
         public float SelectionStartTime;
         public float CompletionTime;
-        public string ConnectionType; // WAN + LAN +VLAN and wireless
         public float TimeSinceLastColorSelection;
     }
 
@@ -60,7 +59,6 @@ public class TestTimer : MonoBehaviour
         public int UsedColorIndex;
         public int RequiredColorIndex;
         public float TimeStamp;
-        public float RecoveryTime;
     }
 
     private void Start()
@@ -172,6 +170,7 @@ public class TestTimer : MonoBehaviour
             return;
 
         int dataIndex = currentTestIndex - 1;
+        RecordError();
 
         ErrorEvent error = new ErrorEvent
         {
@@ -181,28 +180,9 @@ public class TestTimer : MonoBehaviour
             UsedColorIndex = usedColorIndex,
             RequiredColorIndex = requiredColorIndex,
             TimeStamp = Time.time - testStartTime,
-            RecoveryTime = 0f // updates when error is rescolved
         };
 
         errorEvents[dataIndex].Add(error);
-    }
-
-    public void RecordErrorRecovery()
-    {
-        if (currentTestIndex <= 0 || !isTimerRunning)
-            return;
-
-        int dataIndex = currentTestIndex - 1;
-
-        if (errorEvents[dataIndex].Count > 0)
-        {
-            ErrorEvent lastError = errorEvents[dataIndex][errorEvents[dataIndex].Count - 1]; //needs to be fixed
-            if (lastError.RecoveryTime == 0f)
-            {
-                lastError.RecoveryTime = (Time.time - testStartTime) - lastError.TimeStamp;
-                errorEvents[dataIndex][errorEvents[dataIndex].Count - 1] = lastError; // update the eror
-            }
-        }
     }
 
     private void UpdateTimerDisplay(float timeInSeconds)
@@ -233,7 +213,7 @@ public class TestTimer : MonoBehaviour
     }
 
     // second device in connection
-    public void RecordConnectionCompleted(string device1, string device2, int colorIndex, string connectionType)
+    public void RecordConnectionCompleted(string device1, string device2, int colorIndex)
     {
         if (currentTestIndex <= 0 || !isTimerRunning) return;
         int dataIndex = currentTestIndex - 1;
@@ -246,7 +226,6 @@ public class TestTimer : MonoBehaviour
             ColorIndex = colorIndex,
             SelectionStartTime = firstSelectionTime,
             CompletionTime = Time.time - testStartTime,
-            ConnectionType = connectionType,
             TimeSinceLastColorSelection = 0f //calulated below
         };
 
@@ -417,27 +396,27 @@ public class TestTimer : MonoBehaviour
 
         // connection details data
         data += "\n\nConnection Events:\n";
-        data += "Test,Device1,Device2,ColorIndex,StartTime,CompletionTime,ConnectionType,TimeSinceLastColorSelection\n";
+        data += "Test,Device1,Device2,ColorIndex,StartTime,CompletionTime,TimeSinceLastColorSelection\n";
 
         for (int i = 0; i < connectionEvents.Length; i++)
         {
             foreach (ConnectionEvent evt in connectionEvents[i])
             {
                 data += $"{i + 1},{evt.Device1},{evt.Device2},{evt.ColorIndex},{evt.SelectionStartTime}," +
-                        $"{evt.CompletionTime},{evt.ConnectionType},{evt.TimeSinceLastColorSelection}\n";
+                        $"{evt.CompletionTime},{evt.TimeSinceLastColorSelection}\n";
             }
         }
 
         // error details data
         data += "\n\nError Events:\n";
-        data += "Test,ErrorType,Device1,Device2,UsedColorIndex,RequiredColorIndex,TimeStamp,RecoveryTime\n";
+        data += "Test,ErrorType,Device1,Device2,UsedColorIndex,RequiredColorIndex,TimeStamp\n";
 
         for (int i = 0; i < errorEvents.Length; i++)
         {
             foreach (ErrorEvent evt in errorEvents[i])
             {
                 data += $"{i + 1},{evt.ErrorType},{evt.Device1},{evt.Device2},{evt.UsedColorIndex}," +
-                        $"{evt.RequiredColorIndex},{evt.TimeStamp},{evt.RecoveryTime}\n";
+                        $"{evt.RequiredColorIndex},{evt.TimeStamp}\n";
             }
         }
 

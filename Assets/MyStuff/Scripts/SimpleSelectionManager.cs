@@ -135,18 +135,8 @@ public class SimpleSelectionManager : MonoBehaviour
                 TestTimer testTimer = FindObjectOfType<TestTimer>();
                 if (testTimer != null)
                 {
-                    string connectionType = "Unknown";
-                    if (firstSelectedIcon.name.Contains("WAN") || secondSelectedIcon.name.Contains("WAN"))
-                        connectionType = "WAN";
-                    else if (firstSelectedIcon.name.Contains("LAN") || secondSelectedIcon.name.Contains("LAN"))
-                        connectionType = "LAN";
-                    else if (firstSelectedIcon.name.Contains("VLAN") || secondSelectedIcon.name.Contains("VLAN"))
-                        connectionType = "VLAN";
-                    else if (firstSelectedIcon.name.Contains("Wireless") || secondSelectedIcon.name.Contains("Wireless"))
-                        connectionType = "Wireless";
-
                     testTimer.RecordConnectionCompleted(firstSelectedIcon.name, secondSelectedIcon.name,
-                                                      currentColorIndex, connectionType);
+                                                      currentColorIndex);
                 }
             }
 
