@@ -8,7 +8,7 @@ CODE/SCRIPTS/STUFF I USED THAT WAS NOT MINE AND DID NOT CHANGE:
 
 
 SCRIPT IDEAS/RESOURCES USED:
- - https://learn.unity.com/course/create-with-vr/unit/vr-events-and-interactions?   version=2022.3, from part 2
+ - https://learn.unity.com/course/create-with-vr/unit/vr-events-and-interactions?version=2022.3, from part 2
 
 Saving and loading object positions (for my TestManager):
  - SAVE & LOAD MULTIPLE OBJECTS In Unity (With tips and debugging at end!):    https://www.youtube.com/watch?v=47QIUHDEaSY
@@ -26,4 +26,9 @@ controller/headset input tracking:
  - Unity XR Interaction Toolkit 3.0 Tutorial - Part 7 - Controller Tracking:          https://www.youtube.com/watch?v=M44edr-SNKc&t=631s
 
 variable reflection:
- - https://medium.com/@Code_With_K/c-reflection-in-unity-a-complete-guide-for-game-   developers-bea6c7abaebf
+ - https://medium.com/@Code_With_K/c-reflection-in-unity-a-complete-guide-for-game-developers-bea6c7abaebf
+
+Editor Scripting / Editor/GUILayout (for my IconLayoutManager)
+ - https://docs.unity3d.com/ScriptReference/Editor.html
+ - https://docs.unity3d.com/6000.0/Documentation/Manual/gui-Layout.html
+ - Create Your Own CUSTOM INSPECTOR In Unity!:          https://youtu.be/kFLaS1Nyrdw?si=3ME8PZb5s8l-eN44
