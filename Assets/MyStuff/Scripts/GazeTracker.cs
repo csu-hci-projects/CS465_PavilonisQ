@@ -47,9 +47,6 @@ public class GazeTracker : MonoBehaviour
         adjustedDirection.y -= gazeYOffset;
         adjustedDirection.Normalize();
 
-        // *** visble red ray only used in scene view of play mode ***
-        Debug.DrawRay(gazeOrigin.position, adjustedDirection * rayDistance, Color.red);
-
         RaycastHit hit;
         if (Physics.Raycast(gazeOrigin.position, adjustedDirection, out hit, rayDistance, trackingLayers))
         {

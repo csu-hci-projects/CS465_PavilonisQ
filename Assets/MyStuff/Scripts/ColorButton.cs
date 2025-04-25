@@ -13,7 +13,7 @@ public class ColorButton : MonoBehaviour
     private void Start()
     {
      
-        originalScale = transform.localScale; // COULDNT GET THIS TO WORK
+        originalScale = transform.localScale;
 
         interactable = GetComponent<XRSimpleInteractable>();
         if (interactable != null)
@@ -73,7 +73,7 @@ public class ColorButton : MonoBehaviour
         return new Color(buttonColor.r, buttonColor.g, buttonColor.b, 1.0f);
     }
 
-    public void SetAsDefault() // ALSO COUDLDNT GET TO WORK, SAME ISSUE AS ABOVE?
+    public void SetAsDefault() // TODO: FIX
     {
         if (currentlySelectedButton != null && currentlySelectedButton != this)
         {
