@@ -16,6 +16,9 @@ public class SimpleSelectionManager : MonoBehaviour
     private int currentColorIndex = 0;
     private Color currentLineColor = Color.white;
 
+    private TestTimer testTimer;
+    private TestManager testManager;
+
     private class ConnectionInfo
     {
         public GameObject connectionObject;
@@ -41,6 +44,9 @@ public class SimpleSelectionManager : MonoBehaviour
         // grab all icons with XR simple script (network icons, menu buttons, color buttons)
         XRSimpleInteractable[] interactables = FindObjectsOfType<XRSimpleInteractable>();
 
+        testTimer = FindObjectOfType<TestTimer>();
+        testManager = FindObjectOfType<TestManager>();
+
         foreach (XRSimpleInteractable interactable in interactables)
         {
             interactable.selectEntered.AddListener(OnIconSelected);
@@ -64,7 +70,7 @@ public class SimpleSelectionManager : MonoBehaviour
                     if (defaultButton != null)
                     {
                         currentLineColor = defaultButton.GetButtonColor();
-                        defaultButton.ForceSelection(new Vector3(0.4441015f, 0.409564f, 0.01f));
+                        defaultButton.ForceSelection(new Vector3(0.4441015f, 0.409564f, 0.01f)); //position of the WAN button (default selected color button)
                     }
             }
         }
@@ -92,7 +98,6 @@ public class SimpleSelectionManager : MonoBehaviour
             AddOutline(firstSelectedIcon);
 
             // record first device select
-            TestTimer testTimer = FindObjectOfType<TestTimer>();
             if (testTimer != null)
             {
                 testTimer.RecordDeviceSelectionStart(selectedObject.name);
@@ -132,7 +137,6 @@ public class SimpleSelectionManager : MonoBehaviour
                 CreateConnection(firstSelectedIcon, secondSelectedIcon);
 
                 // record for comleted connections (right and wrong)
-                TestTimer testTimer = FindObjectOfType<TestTimer>();
                 if (testTimer != null)
                 {
                     testTimer.RecordConnectionCompleted(firstSelectedIcon.name, secondSelectedIcon.name,
@@ -203,7 +207,6 @@ public class SimpleSelectionManager : MonoBehaviour
     currentLineColor = color;
     currentColorIndex = colorIndex;
     
-    TestTimer testTimer = FindObjectOfType<TestTimer>();
     if (testTimer != null && colorIndex >= 0)
     {
         testTimer.RecordColorSelection(colorIndex);
