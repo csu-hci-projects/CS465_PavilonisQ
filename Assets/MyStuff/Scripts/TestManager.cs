@@ -41,7 +41,7 @@ public class TestManager : MonoBehaviour
             }
         }
 
-        // cehck if connection passes reuquirements
+        // check if connection passes reuquirements
         public bool Contains(string device1, string device2)
         {
             return (Device1Name == device1 && Device2Name == device2) ||
@@ -62,7 +62,7 @@ public class TestManager : MonoBehaviour
 
         if (iconLayoutManager != null)
         {
-            iconLayoutManager.ApplyLayout(0); //forces layout for tutorial, maybe not needed?
+            iconLayoutManager.ApplyLayout(0);
         }
         NextTask();
 
@@ -190,7 +190,7 @@ public class TestManager : MonoBehaviour
                             // checks requirements
                             if (completedConnections[source.name] >= pendingConnections[source.name])
                             {
-                                ShowDeviceCompletionFeedback(source);
+                                ShowCheckmark(source);
                             }
                         }
 
@@ -198,10 +198,10 @@ public class TestManager : MonoBehaviour
                         {
                             completedConnections[target.name]++;
 
-                            // check all connections for multi connection iconss
+                            // check all connections for multi connection icons
                             if (completedConnections[target.name] >= pendingConnections[target.name])
                             {
-                                ShowDeviceCompletionFeedback(target);
+                                ShowCheckmark(target);
                             }
                         }
                     }
@@ -209,8 +209,8 @@ public class TestManager : MonoBehaviour
                 else
                 {
                     connection.correctColor = false;
-
                     TestTimer testTimer = FindObjectOfType<TestTimer>();
+
                     if (testTimer != null)
                     {
                         testTimer.RecordDetailedError("WrongColor", source.name, target.name,
@@ -232,7 +232,13 @@ public class TestManager : MonoBehaviour
         if (testTimer != null)
         {
             testTimer.StopTest();
-            testTimer.SaveDataToFile();
+            TestDataOutput output = new TestDataOutput(testTimer);
+            if (testTimer != null)
+            {
+                testTimer.StopTest();
+                TestDataOutput dataOutput = new TestDataOutput(testTimer);
+                dataOutput.SaveDataToFile();
+            }
         }
 
         testUI.SetInstructions("All tests completed! Thank you for participating.");
@@ -240,43 +246,17 @@ public class TestManager : MonoBehaviour
         testUI.SetProgress(tasks.Length, tasks.Length);
     }
 
-    // this ended being checkmark
-    private void ShowDeviceCompletionFeedback(GameObject device)
+    private void ShowCheckmark(GameObject device)
     {
         GameObject checkMark = new GameObject($"{device.name}Checkmark");
         SpriteRenderer renderer = checkMark.AddComponent<SpriteRenderer>();
 
         renderer.sprite = checkmarkSprite;
-        checkMark.transform.position = device.transform.position + new Vector3(-0.09f, 0.22f, -0.05f);
+        checkMark.transform.position = device.transform.position + new Vector3(-0.09f, 0.22f, -0.05f); // slightly above icon position
         checkMark.transform.forward = Camera.main.transform.forward;
         checkMark.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
         checkMarks.Add(checkMark);
-        StartCoroutine(PulseScale(checkMark.transform)); 
-    }
-
-    private IEnumerator PulseScale(Transform obj)
-    {
-        Vector3 originalScale = obj.localScale;
-
-        float duration = 0.3f;
-        float timer = 0;
-        while (timer < duration)
-        {
-            timer += Time.deltaTime;
-            float t = timer / duration;
-            obj.localScale = Vector3.Lerp(originalScale, originalScale * 1.5f, t);
-            yield return null;
-        }
-
-        timer = 0;
-        while (timer < duration)
-        {
-            timer += Time.deltaTime;
-            float t = timer / duration;
-            obj.localScale = Vector3.Lerp(originalScale * 1.5f, originalScale, t);
-            yield return null;
-        }
     }
 
     private void ClearCheckMarks()
@@ -306,9 +286,4 @@ public class TestManager : MonoBehaviour
         return false;
     }
 
-    public void RestartTutorial()
-    {
-        currentTaskIndex = -1;
-        NextTask();
-    }
 }
