@@ -4,15 +4,22 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class ColorButton : MonoBehaviour
 {
-    [SerializeField] private Color buttonColor = Color.white;
     private XRSimpleInteractable interactable;
 
     private Vector3 originalScale;
     private static ColorButton currentlySelectedButton;
 
+    [SerializeField] private Color buttonColor = Color.white;
+
+    public Color ButtonColor
+    {
+        get { return buttonColor; }
+        private set { buttonColor = value; }
+    }
+
     private void Start()
     {
-     
+
         originalScale = transform.localScale;
 
         interactable = GetComponent<XRSimpleInteractable>();
@@ -122,7 +129,7 @@ public class ColorButton : MonoBehaviour
         {
             renderer.material.color = buttonColor;
         }
-        if (gameObject.name == "Color2") //MAYBE NOT WORKING TOO
+        if (gameObject.name == "Color2")
         {
             GetComponent<Renderer>().material.color = newColor;
         }
@@ -132,19 +139,10 @@ public class ColorButton : MonoBehaviour
     {
         if (currentlySelectedButton != null)
         {
-            Color buttonColor = Color.white;
-            System.Reflection.FieldInfo fieldInfo = typeof(ColorButton).GetField("buttonColor",
-                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-
-            if (fieldInfo != null)
-            {
-                buttonColor = (Color)fieldInfo.GetValue(currentlySelectedButton);
-            }
-
-            SimpleSelectionManager selectionManager = FindObjectOfType<SimpleSelectionManager>();
+            SimpleSelectionManager selectionManager = Object.FindObjectOfType<SimpleSelectionManager>();
             if (selectionManager != null)
             {
-                selectionManager.SetConnectionColor(buttonColor);
+                selectionManager.SetConnectionColor(currentlySelectedButton.ButtonColor);
             }
         }
     }
@@ -160,23 +158,10 @@ public class ColorButton : MonoBehaviour
             }
         }
 
-        ColorPaletteManager paletteManager = FindObjectOfType<ColorPaletteManager>();
+        ColorPaletteManager paletteManager = Object.FindObjectOfType<ColorPaletteManager>();
         if (paletteManager != null)
         {
-            System.Reflection.FieldInfo fieldInfo = typeof(ColorPaletteManager).GetField("colorButtons",
-                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-
-            if (fieldInfo != null)
-            {
-                ColorButton[] buttons = (ColorButton[])fieldInfo.GetValue(paletteManager);
-                for (int i = 0; i < buttons.Length; i++)
-                {
-                    if (buttons[i] == this)
-                    {
-                        return i;
-                    }
-                }
-            }
+            return paletteManager.GetButtonIndex(this);
         }
         return -1;
     }

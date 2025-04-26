@@ -39,7 +39,7 @@ public class IconLayoutManager : MonoBehaviour
         if (layouts == null || layoutIndex < 0 || layoutIndex >= layouts.Length)
             return;
 
-        // creatre new layout
+        // create new layout
         if (layouts[layoutIndex] == null)
             layouts[layoutIndex] = new IconLayout();
 

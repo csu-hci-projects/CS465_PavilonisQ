@@ -70,9 +70,5 @@ public class TutorialManager : MonoBehaviour
     {
         tutorialCanvas.SetActive(false);
         Time.timeScale = 1f;
-        if (testManager != null)
-        {
-            testManager.RestartTutorial();
-        }
     }
 }

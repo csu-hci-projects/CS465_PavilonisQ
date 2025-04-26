@@ -54,15 +54,11 @@ public class GazeTracker : MonoBehaviour
             // get gaze panel (instructions, color ui, icon panel)
             string newGazeArea = DetermineGazeArea(hit.transform.gameObject);
             
-
-            // check if new area
             if (newGazeArea != currentGazeArea)
             {
-                // record previous panel gaze time 
                 float duration = Time.time - gazeStartTime;
                 areaDurations[currentGazeArea] += duration;
 
-                // record gaze time only in test 1-3
                 if (testTimer != null)
                 {
                     testTimer.RecordGaze(currentGazeArea, duration);
@@ -75,14 +71,11 @@ public class GazeTracker : MonoBehaviour
         }
         else
         {
-            // track when gaze is not on one of three panels
             if (currentGazeArea != "None")
             {
-                // record previous panel gaze time
                 float duration = Time.time - gazeStartTime;
                 areaDurations[currentGazeArea] += duration;
 
-                // record gaze time only in test 1-3
                 if (testTimer != null)
                 {
                     testTimer.RecordGaze(currentGazeArea, duration);
@@ -111,8 +104,6 @@ public class GazeTracker : MonoBehaviour
 
             current = current.parent;
         }
-
-        // set none if none of three panels are gazed at
         return "None";
     }
 

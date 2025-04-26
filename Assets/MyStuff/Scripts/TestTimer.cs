@@ -26,22 +26,33 @@ public class TestTimer : MonoBehaviour
 
     // HCI grouped data points
     private Dictionary<string, float>[] connectionTimings; // time to complete a connection
-    private Dictionary<string, float>[] colorSelectionTimings; // time between picking colors + not using icons
     private List<ConnectionEvent>[] connectionEvents; // type of connection
     private List<ErrorEvent>[] errorEvents; // errors
     private Dictionary<string, float>[] attentionDistribution; // time spend gazing at panels + the name of panel
     private string firstSelectedDevice = null;
     private float firstSelectionTime = 0f;
-    private Dictionary<string, float> deviceHoverStartTimes = new Dictionary<string, float>(); // time controller is spent pointing at icons,
 
-    private class ColorChange
+    public class TestData
+    {
+        public float[] TestCompletionTimes;
+        public int[] TestErrorCounts;
+        public Dictionary<int, int>[] ColorUsageCounts;
+        public List<ColorChange>[] ColorChangeSequences;
+        public Dictionary<string, float>[] ConnectionTimings;
+        public Dictionary<string, float>[] ColorSelectionTimings;
+        public List<ConnectionEvent>[] ConnectionEvents;
+        public List<ErrorEvent>[] ErrorEvents;
+        public Dictionary<string, float>[] AttentionDistribution;
+    }
+
+    public class ColorChange
     {
         public int FromColorIndex;
         public int ToColorIndex;
         public float TimeStamp;
     }
 
-    private class ConnectionEvent
+    public class ConnectionEvent
     {
         public string Device1;
         public string Device2;
@@ -51,7 +62,7 @@ public class TestTimer : MonoBehaviour
         public float TimeSinceLastColorSelection;
     }
 
-    private class ErrorEvent
+    public class ErrorEvent
     {
         public string ErrorType; // wrong connection and wrong color
         public string Device1; // left and right controller for XR interation setup
@@ -75,7 +86,6 @@ public class TestTimer : MonoBehaviour
         colorUsageCounts = new Dictionary<int, int>[testCount];
         colorChangeSequences = new List<ColorChange>[testCount];
         connectionTimings = new Dictionary<string, float>[testCount];
-        colorSelectionTimings = new Dictionary<string, float>[testCount];
         connectionEvents = new List<ConnectionEvent>[testCount];
         errorEvents = new List<ErrorEvent>[testCount];
         attentionDistribution = new Dictionary<string, float>[testCount];
@@ -85,7 +95,6 @@ public class TestTimer : MonoBehaviour
             colorUsageCounts[i] = new Dictionary<int, int>();
             colorChangeSequences[i] = new List<ColorChange>();
             connectionTimings[i] = new Dictionary<string, float>();
-            colorSelectionTimings[i] = new Dictionary<string, float>();
             connectionEvents[i] = new List<ConnectionEvent>();
             errorEvents[i] = new List<ErrorEvent>();
             attentionDistribution[i] = new Dictionary<string, float>()
@@ -155,14 +164,6 @@ public class TestTimer : MonoBehaviour
         }
     }
 
-    public void RecordError()
-    {
-        if (currentTestIndex >= 0 && currentTestIndex < testErrorCounts.Length)
-        {
-            testErrorCounts[currentTestIndex]++;
-        }
-    }
-
     public void RecordDetailedError(string errorType, string device1, string device2,
                                    int usedColorIndex, int requiredColorIndex)
     {
@@ -170,7 +171,11 @@ public class TestTimer : MonoBehaviour
             return;
 
         int dataIndex = currentTestIndex - 1;
-        RecordError();
+
+        if (dataIndex >= 0 && dataIndex < testErrorCounts.Length)
+        {
+            testErrorCounts[dataIndex]++;
+        }
 
         ErrorEvent error = new ErrorEvent
         {
@@ -242,39 +247,6 @@ public class TestTimer : MonoBehaviour
         firstSelectedDevice = null;
     }
 
-    // track when hovering over device icon
-    public void RecordDeviceHoverStart(string deviceName)
-    {
-        if (!deviceHoverStartTimes.ContainsKey(deviceName))
-        {
-            deviceHoverStartTimes[deviceName] = Time.time;
-        }
-    }
-
-    public void RecordDeviceHoverEnd(string deviceName)
-    {
-        if (currentTestIndex <= 0 || !isTimerRunning) return;
-
-        int dataIndex = currentTestIndex - 1;
-
-        if (deviceHoverStartTimes.ContainsKey(deviceName))
-        {
-            float hoverDuration = Time.time - deviceHoverStartTimes[deviceName];
-            string key = $"Hover-{deviceName}";
-
-            if (!colorSelectionTimings[dataIndex].ContainsKey(key))
-            {
-                colorSelectionTimings[dataIndex][key] = hoverDuration;
-            }
-            else
-            {
-                colorSelectionTimings[dataIndex][key] += hoverDuration;
-            }
-
-            deviceHoverStartTimes.Remove(deviceName);
-        }
-    }
-
     // track gaze time for panels
     public void RecordGaze(string area, float duration)
     {
@@ -286,20 +258,6 @@ public class TestTimer : MonoBehaviour
         {
             attentionDistribution[dataIndex][area] += duration;
         }
-        else
-        {
-            attentionDistribution[dataIndex][area] = duration;
-        }
-    }
-
-    public float[] GetTestCompletionTimes()
-    {
-        return testCompletionTimes;
-    }
-
-    public int[] GetTestErrorCounts()
-    {
-        return testErrorCounts;
     }
 
     public void RecordColorSelection(int colorIndex)
@@ -348,139 +306,18 @@ public class TestTimer : MonoBehaviour
             colorChangeSequences[dataIndex].Add(change);
         }
     }
-
-    public string ExportTimerData() // FOR ALL DATA
+    public TestData GetAllTestData()
     {
-        // netowrking test data
-        string data = "Test,CompletionTime,ErrorCount\n";
-        for (int i = 0; i < testCompletionTimes.Length; i++)
+        return new TestData
         {
-            data += $"{i + 1},{testCompletionTimes[i]},{testErrorCounts[i]}\n";
-        }
-
-        // color usage data
-        data += "\n\nColor Usage Data:\n";
-        data += "Test,ColorIndex,UsageCount\n";
-
-        for (int i = 0; i < colorUsageCounts.Length; i++)
-        {
-            foreach (var kvp in colorUsageCounts[i])
-            {
-                data += $"{i + 1},{kvp.Key},{kvp.Value}\n";
-            }
-        }
-
-        // color change sequences data
-        data += "\n\nColor Change Sequences:\n";
-        data += "Test,FromColor,ToColor,TimeStamp\n";
-
-        for (int i = 0; i < colorChangeSequences.Length; i++)
-        {
-            foreach (ColorChange change in colorChangeSequences[i])
-            {
-                data += $"{i + 1},{change.FromColorIndex},{change.ToColorIndex},{change.TimeStamp}\n";
-            }
-        }
-
-        // connection time data (between icons)
-        data += "\n\nConnection Timing Data:\n";
-        data += "Test,Connection,TimeTaken\n";
-
-        for (int i = 0; i < connectionTimings.Length; i++)
-        {
-            foreach (var kvp in connectionTimings[i])
-            {
-                data += $"{i + 1},{kvp.Key},{kvp.Value}\n";
-            }
-        }
-
-        // connection details data
-        data += "\n\nConnection Events:\n";
-        data += "Test,Device1,Device2,ColorIndex,StartTime,CompletionTime,TimeSinceLastColorSelection\n";
-
-        for (int i = 0; i < connectionEvents.Length; i++)
-        {
-            foreach (ConnectionEvent evt in connectionEvents[i])
-            {
-                data += $"{i + 1},{evt.Device1},{evt.Device2},{evt.ColorIndex},{evt.SelectionStartTime}," +
-                        $"{evt.CompletionTime},{evt.TimeSinceLastColorSelection}\n";
-            }
-        }
-
-        // error details data
-        data += "\n\nError Events:\n";
-        data += "Test,ErrorType,Device1,Device2,UsedColorIndex,RequiredColorIndex,TimeStamp\n";
-
-        for (int i = 0; i < errorEvents.Length; i++)
-        {
-            foreach (ErrorEvent evt in errorEvents[i])
-            {
-                data += $"{i + 1},{evt.ErrorType},{evt.Device1},{evt.Device2},{evt.UsedColorIndex}," +
-                        $"{evt.RequiredColorIndex},{evt.TimeStamp}\n";
-            }
-        }
-
-        // gaze panel tracking data
-        data += "\n\nAttention Distribution:\n";
-        data += "Test,Area,Duration\n";
-
-        for (int i = 0; i < attentionDistribution.Length; i++)
-        {
-            foreach (var kvp in attentionDistribution[i])
-            {
-                data += $"{i + 1},{kvp.Key},{kvp.Value}\n";
-            }
-        }
-
-        return data;
-    }
-
-    public void SaveDataToFile()
-    {
-        string data = ExportTimerData();
-        string directoryPath = Application.dataPath + "/TestData";
-        if (!Directory.Exists(directoryPath))
-        {
-            Directory.CreateDirectory(directoryPath);
-        }
-
-        // creates a unique file name for each test output, has color palette in filename
-        string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        string colorPalette = GetColorPaletteName();
-        string filename = $"{directoryPath}/ColorTest_{colorPalette}_{timestamp}.csv";
-
-
-        File.WriteAllText(filename, data);
-    }
-
-    private string GetColorPaletteName()
-    {
-        ColorPaletteManager paletteManager = FindObjectOfType<ColorPaletteManager>();
-        if (paletteManager != null)
-        {
-            // access palette from color ui
-            System.Reflection.FieldInfo fieldInfo = typeof(ColorPaletteManager).GetField("currentPaletteIndex",
-                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-
-            if (fieldInfo != null)
-            {
-                int index = (int)fieldInfo.GetValue(paletteManager);
-
-                // get palette name for csv outpout
-                System.Reflection.FieldInfo palettesField = typeof(ColorPaletteManager).GetField("colorPalettes",
-                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-
-                if (palettesField != null)
-                {
-                    var palettes = palettesField.GetValue(paletteManager) as List<ColorPaletteManager.ColorPalette>;
-                    if (palettes != null && index >= 0 && index < palettes.Count)
-                    {
-                        return palettes[index].paletteName.Replace(" ", "");
-                    }
-                }
-            }
-        }
-
-        return "Unknown";
+            TestCompletionTimes = this.testCompletionTimes,
+            TestErrorCounts = this.testErrorCounts,
+            ColorUsageCounts = this.colorUsageCounts,
+            ColorChangeSequences = this.colorChangeSequences,
+            ConnectionTimings = this.connectionTimings,
+            ConnectionEvents = this.connectionEvents,
+            ErrorEvents = this.errorEvents,
+            AttentionDistribution = this.attentionDistribution
+        };
     }
 }
