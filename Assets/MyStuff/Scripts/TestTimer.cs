@@ -26,13 +26,11 @@ public class TestTimer : MonoBehaviour
 
     // HCI grouped data points
     private Dictionary<string, float>[] connectionTimings; // time to complete a connection
-    private Dictionary<string, float>[] colorSelectionTimings; // time between picking colors + not using icons
     private List<ConnectionEvent>[] connectionEvents; // type of connection
     private List<ErrorEvent>[] errorEvents; // errors
     private Dictionary<string, float>[] attentionDistribution; // time spend gazing at panels + the name of panel
     private string firstSelectedDevice = null;
     private float firstSelectionTime = 0f;
-    private Dictionary<string, float> deviceHoverStartTimes = new Dictionary<string, float>(); // time controller is spent pointing at icons,
 
     public class TestData
     {
@@ -88,7 +86,6 @@ public class TestTimer : MonoBehaviour
         colorUsageCounts = new Dictionary<int, int>[testCount];
         colorChangeSequences = new List<ColorChange>[testCount];
         connectionTimings = new Dictionary<string, float>[testCount];
-        colorSelectionTimings = new Dictionary<string, float>[testCount];
         connectionEvents = new List<ConnectionEvent>[testCount];
         errorEvents = new List<ErrorEvent>[testCount];
         attentionDistribution = new Dictionary<string, float>[testCount];
@@ -98,7 +95,6 @@ public class TestTimer : MonoBehaviour
             colorUsageCounts[i] = new Dictionary<int, int>();
             colorChangeSequences[i] = new List<ColorChange>();
             connectionTimings[i] = new Dictionary<string, float>();
-            colorSelectionTimings[i] = new Dictionary<string, float>();
             connectionEvents[i] = new List<ConnectionEvent>();
             errorEvents[i] = new List<ErrorEvent>();
             attentionDistribution[i] = new Dictionary<string, float>()
@@ -251,39 +247,6 @@ public class TestTimer : MonoBehaviour
         firstSelectedDevice = null;
     }
 
-    // track when hovering over device icon
-    public void RecordDeviceHoverStart(string deviceName)
-    {
-        if (!deviceHoverStartTimes.ContainsKey(deviceName))
-        {
-            deviceHoverStartTimes[deviceName] = Time.time;
-        }
-    }
-
-    public void RecordDeviceHoverEnd(string deviceName)
-    {
-        if (currentTestIndex <= 0 || !isTimerRunning) return;
-
-        int dataIndex = currentTestIndex - 1;
-
-        if (deviceHoverStartTimes.ContainsKey(deviceName))
-        {
-            float hoverDuration = Time.time - deviceHoverStartTimes[deviceName];
-            string key = $"Hover-{deviceName}";
-
-            if (!colorSelectionTimings[dataIndex].ContainsKey(key))
-            {
-                colorSelectionTimings[dataIndex][key] = hoverDuration;
-            }
-            else
-            {
-                colorSelectionTimings[dataIndex][key] += hoverDuration;
-            }
-
-            deviceHoverStartTimes.Remove(deviceName);
-        }
-    }
-
     // track gaze time for panels
     public void RecordGaze(string area, float duration)
     {
@@ -295,20 +258,6 @@ public class TestTimer : MonoBehaviour
         {
             attentionDistribution[dataIndex][area] += duration;
         }
-        else
-        {
-            attentionDistribution[dataIndex][area] = duration;
-        }
-    }
-
-    public float[] GetTestCompletionTimes()
-    {
-        return testCompletionTimes;
-    }
-
-    public int[] GetTestErrorCounts()
-    {
-        return testErrorCounts;
     }
 
     public void RecordColorSelection(int colorIndex)
@@ -366,7 +315,6 @@ public class TestTimer : MonoBehaviour
             ColorUsageCounts = this.colorUsageCounts,
             ColorChangeSequences = this.colorChangeSequences,
             ConnectionTimings = this.connectionTimings,
-            ColorSelectionTimings = this.colorSelectionTimings,
             ConnectionEvents = this.connectionEvents,
             ErrorEvents = this.errorEvents,
             AttentionDistribution = this.attentionDistribution

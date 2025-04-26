@@ -135,4 +135,28 @@ public class ColorPaletteManager : MonoBehaviour
             }
         }
     }
+    public string GetCurrentPaletteName()
+    {
+        if (currentPaletteIndex >= 0 && currentPaletteIndex < colorPalettes.Count)
+        {
+            return colorPalettes[currentPaletteIndex].paletteName.Replace(" ", "");
+        }
+        return "Unknown";
+    }
+    public ColorButton[] GetColorButtons()
+    {
+        return colorButtons;
+    }
+
+    public int GetButtonIndex(ColorButton button)
+    {
+        for (int i = 0; i < colorButtons.Length; i++)
+        {
+            if (colorButtons[i] == button)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

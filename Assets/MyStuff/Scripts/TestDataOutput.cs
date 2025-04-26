@@ -13,7 +13,7 @@ public class TestDataOutput
         testData = timer.GetAllTestData();
     }
 
-    public string ExportTimerData()
+    public string ExportData()
     {
         // networking test data
         string data = "Test,CompletionTime,ErrorCount\n";
@@ -101,7 +101,7 @@ public class TestDataOutput
 
     public void SaveDataToFile()
     {
-        string data = ExportTimerData();
+        string data = ExportData();
         string directoryPath = Application.dataPath + "/TestData";
         if (!Directory.Exists(directoryPath))
         {
@@ -121,29 +121,8 @@ public class TestDataOutput
         ColorPaletteManager paletteManager = UnityEngine.Object.FindObjectOfType<ColorPaletteManager>();
         if (paletteManager != null)
         {
-            // access palette from color UI
-            System.Reflection.FieldInfo fieldInfo = typeof(ColorPaletteManager).GetField("currentPaletteIndex",
-                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-
-            if (fieldInfo != null)
-            {
-                int index = (int)fieldInfo.GetValue(paletteManager);
-
-                // get palette name for CSV output
-                System.Reflection.FieldInfo palettesField = typeof(ColorPaletteManager).GetField("colorPalettes",
-                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-
-                if (palettesField != null)
-                {
-                    var palettes = palettesField.GetValue(paletteManager) as List<ColorPaletteManager.ColorPalette>;
-                    if (palettes != null && index >= 0 && index < palettes.Count)
-                    {
-                        return palettes[index].paletteName.Replace(" ", "");
-                    }
-                }
-            }
+            return paletteManager.GetCurrentPaletteName();
         }
-
         return "Unknown";
     }
 }
