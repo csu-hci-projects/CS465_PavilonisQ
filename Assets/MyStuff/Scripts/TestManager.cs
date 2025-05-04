@@ -28,7 +28,6 @@ public class TestManager : MonoBehaviour
 
         public ConnectionPair(string device1, string device2)
         {
-            // Store names in alphabetical order for consistency in comparisons
             if (string.Compare(device1, device2) < 0)
             {
                 Device1Name = device1;
