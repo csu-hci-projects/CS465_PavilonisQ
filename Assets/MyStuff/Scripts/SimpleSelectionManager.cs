@@ -100,7 +100,7 @@ public class SimpleSelectionManager : MonoBehaviour
             // record first device select
             if (testTimer != null)
             {
-                testTimer.RecordDeviceSelectionStart(selectedObject.name);
+                testTimer.RecordConnectionFirstDevice(selectedObject.name);
             }
         }
         // check if selecting same icon as first, deselect if so
@@ -109,7 +109,7 @@ public class SimpleSelectionManager : MonoBehaviour
             RemoveOutline(firstSelectedIcon);
             firstSelectedIcon = null;
         }
-        // create connection if second icon is diffeent from first
+        // create connection if second icon is different from first
         else
         {
             secondSelectedIcon = selectedObject;
@@ -136,10 +136,10 @@ public class SimpleSelectionManager : MonoBehaviour
                 // new connection
                 CreateConnection(firstSelectedIcon, secondSelectedIcon);
 
-                // record for comleted connections (right and wrong)
+                // record for completed connections (right and wrong)
                 if (testTimer != null)
                 {
-                    testTimer.RecordConnectionCompleted(firstSelectedIcon.name, secondSelectedIcon.name,
+                    testTimer.RecordConnectionSecondDevice(firstSelectedIcon.name, secondSelectedIcon.name,
                                                       currentColorIndex);
                 }
             }
@@ -209,7 +209,7 @@ public class SimpleSelectionManager : MonoBehaviour
     
     if (testTimer != null && colorIndex >= 0)
     {
-        testTimer.RecordColorSelection(colorIndex);
+        testTimer.RecordColorNameForCSV(colorIndex);
     }
 }
 

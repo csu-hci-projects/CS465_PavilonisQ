@@ -28,7 +28,7 @@ public class TestTimer : MonoBehaviour
     private Dictionary<string, float>[] connectionTimings; // time to complete a connection
     private List<ConnectionEvent>[] connectionEvents; // type of connection
     private List<ErrorEvent>[] errorEvents; // errors
-    private Dictionary<string, float>[] attentionDistribution; // time spend gazing at panels + the name of panel
+    private Dictionary<string, float>[] panelFocus; // time spend gazing at panels + the name of panel
     private string firstSelectedDevice = null;
     private float firstSelectionTime = 0f;
 
@@ -42,7 +42,7 @@ public class TestTimer : MonoBehaviour
         public Dictionary<string, float>[] ColorSelectionTimings;
         public List<ConnectionEvent>[] ConnectionEvents;
         public List<ErrorEvent>[] ErrorEvents;
-        public Dictionary<string, float>[] AttentionDistribution;
+        public Dictionary<string, float>[] PanelFocus;
     }
 
     public class ColorChange
@@ -54,8 +54,8 @@ public class TestTimer : MonoBehaviour
 
     public class ConnectionEvent
     {
-        public string Device1;
-        public string Device2;
+        public string IconDevice1;
+        public string IconDevice2;
         public int ColorIndex;
         public float SelectionStartTime;
         public float CompletionTime;
@@ -65,8 +65,8 @@ public class TestTimer : MonoBehaviour
     public class ErrorEvent
     {
         public string ErrorType; // wrong connection and wrong color
-        public string Device1; // left and right controller for XR interation setup
-        public string Device2;
+        public string IconDevice1; // first connected device
+        public string IconDevice2; // second conneced device
         public int UsedColorIndex;
         public int RequiredColorIndex;
         public float TimeStamp;
@@ -74,7 +74,7 @@ public class TestTimer : MonoBehaviour
 
     private void Start()
     {
-        // createa data storage
+        // create data storage
         int testCount = testManager.GetTestCount();
         testCompletionTimes = new float[testCount];
         testErrorCounts = new int[testCount];
@@ -88,7 +88,7 @@ public class TestTimer : MonoBehaviour
         connectionTimings = new Dictionary<string, float>[testCount];
         connectionEvents = new List<ConnectionEvent>[testCount];
         errorEvents = new List<ErrorEvent>[testCount];
-        attentionDistribution = new Dictionary<string, float>[testCount];
+        panelFocus = new Dictionary<string, float>[testCount];
 
         for (int i = 0; i < testCount; i++)
         {
@@ -97,11 +97,9 @@ public class TestTimer : MonoBehaviour
             connectionTimings[i] = new Dictionary<string, float>();
             connectionEvents[i] = new List<ConnectionEvent>();
             errorEvents[i] = new List<ErrorEvent>();
-            attentionDistribution[i] = new Dictionary<string, float>()
+            panelFocus[i] = new Dictionary<string, float>()
             {
-                { "Instructions", 0f },
-                { "Network", 0f },
-                { "ColorPalette", 0f }
+                { "Instructions", 0f }, { "Network", 0f }, { "ColorPalette", 0f }
             };
         }
     }
@@ -129,7 +127,6 @@ public class TestTimer : MonoBehaviour
         }
         else
         {
-            // doesnt count for tutorial
             isTimerRunning = false;
             elapsedTime = 0f;
             UpdateTimerDisplay(elapsedTime);
@@ -164,7 +161,7 @@ public class TestTimer : MonoBehaviour
         }
     }
 
-    public void RecordDetailedError(string errorType, string device1, string device2,
+    public void RecordError(string errorType, string device1, string device2,
                                    int usedColorIndex, int requiredColorIndex)
     {
         if (currentTestIndex <= 0 || !isTimerRunning)
@@ -180,8 +177,8 @@ public class TestTimer : MonoBehaviour
         ErrorEvent error = new ErrorEvent
         {
             ErrorType = errorType,
-            Device1 = device1,
-            Device2 = device2,
+            IconDevice1 = device1,
+            IconDevice2 = device2,
             UsedColorIndex = usedColorIndex,
             RequiredColorIndex = requiredColorIndex,
             TimeStamp = Time.time - testStartTime,
@@ -205,8 +202,8 @@ public class TestTimer : MonoBehaviour
         return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    // first device in connection
-    public void RecordDeviceSelectionStart(string deviceName)
+
+    public void RecordConnectionFirstDevice(string deviceName)
     {
         if (currentTestIndex <= 0 || !isTimerRunning) return;
 
@@ -217,8 +214,7 @@ public class TestTimer : MonoBehaviour
         }
     }
 
-    // second device in connection
-    public void RecordConnectionCompleted(string device1, string device2, int colorIndex)
+    public void RecordConnectionSecondDevice(string device1, string device2, int colorIndex)
     {
         if (currentTestIndex <= 0 || !isTimerRunning) return;
         int dataIndex = currentTestIndex - 1;
@@ -226,8 +222,8 @@ public class TestTimer : MonoBehaviour
 
         ConnectionEvent connectionEvent = new ConnectionEvent
         {
-            Device1 = firstSelectedDevice,
-            Device2 = device2,
+            IconDevice1 = firstSelectedDevice,
+            IconDevice2 = device2,
             ColorIndex = colorIndex,
             SelectionStartTime = firstSelectionTime,
             CompletionTime = Time.time - testStartTime,
@@ -254,13 +250,13 @@ public class TestTimer : MonoBehaviour
 
         int dataIndex = currentTestIndex - 1;
 
-        if (attentionDistribution[dataIndex].ContainsKey(area))
+        if (panelFocus[dataIndex].ContainsKey(area))
         {
-            attentionDistribution[dataIndex][area] += duration;
+            panelFocus[dataIndex][area] += duration;
         }
     }
 
-    public void RecordColorSelection(int colorIndex)
+    public void RecordColorNameForCSV(int colorIndex)
     {
         if (currentTestIndex <= 0 || !isTimerRunning)
             return;
@@ -306,6 +302,7 @@ public class TestTimer : MonoBehaviour
             colorChangeSequences[dataIndex].Add(change);
         }
     }
+
     public TestData GetAllTestData()
     {
         return new TestData
@@ -317,7 +314,7 @@ public class TestTimer : MonoBehaviour
             ConnectionTimings = this.connectionTimings,
             ConnectionEvents = this.connectionEvents,
             ErrorEvents = this.errorEvents,
-            AttentionDistribution = this.attentionDistribution
+            PanelFocus = this.panelFocus
         };
     }
 }

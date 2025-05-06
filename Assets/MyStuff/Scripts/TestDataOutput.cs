@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
+
 public class TestDataOutput
 {
     private TestTimer.TestData testData;
@@ -66,7 +67,7 @@ public class TestDataOutput
         {
             foreach (TestTimer.ConnectionEvent evt in testData.ConnectionEvents[i])
             {
-                data += $"{i + 1},{evt.Device1},{evt.Device2},{evt.ColorIndex},{evt.SelectionStartTime}," +
+                data += $"{i + 1},{evt.IconDevice1},{evt.IconDevice2},{evt.ColorIndex},{evt.SelectionStartTime}," +
                         $"{evt.CompletionTime},{evt.TimeSinceLastColorSelection}\n";
             }
         }
@@ -79,7 +80,7 @@ public class TestDataOutput
         {
             foreach (TestTimer.ErrorEvent evt in testData.ErrorEvents[i])
             {
-                data += $"{i + 1},{evt.ErrorType},{evt.Device1},{evt.Device2},{evt.UsedColorIndex}," +
+                data += $"{i + 1},{evt.ErrorType},{evt.IconDevice1},{evt.IconDevice2},{evt.UsedColorIndex}," +
                         $"{evt.RequiredColorIndex},{evt.TimeStamp}\n";
             }
         }
@@ -88,9 +89,9 @@ public class TestDataOutput
         data += "\n\nAttention Distribution:\n";
         data += "Test,Area,Duration\n";
 
-        for (int i = 0; i < testData.AttentionDistribution.Length; i++)
+        for (int i = 0; i < testData.PanelFocus.Length; i++)
         {
-            foreach (var kvp in testData.AttentionDistribution[i])
+            foreach (var kvp in testData.PanelFocus[i])
             {
                 data += $"{i + 1},{kvp.Key},{kvp.Value}\n";
             }
