@@ -212,7 +212,7 @@ public class TestManager : MonoBehaviour
 
                     if (testTimer != null)
                     {
-                        testTimer.RecordDetailedError("WrongColor", source.name, target.name,
+                        testTimer.RecordError("WrongColor", source.name, target.name,
                                                      colorIndex, connection.requiredColorIndex);
                     }
                 }
@@ -251,7 +251,7 @@ public class TestManager : MonoBehaviour
         SpriteRenderer renderer = checkMark.AddComponent<SpriteRenderer>();
 
         renderer.sprite = checkmarkSprite;
-        checkMark.transform.position = device.transform.position + new Vector3(-0.09f, 0.22f, -0.05f); // slightly above icon position
+        checkMark.transform.position = device.transform.position + new Vector3(-0.09f, 0.22f, -0.05f); // checkmark slightly above icon position
         checkMark.transform.forward = Camera.main.transform.forward;
         checkMark.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
