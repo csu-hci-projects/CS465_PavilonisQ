@@ -66,7 +66,7 @@ public class ColorButton : MonoBehaviour
 
         currentlySelectedButton = this;
 
-        // set selected color on selectionmanager
+        // set selected color on selectionManager
         SimpleSelectionManager selectionManager = FindObjectOfType<SimpleSelectionManager>();
         if (selectionManager != null)
         {
@@ -80,7 +80,7 @@ public class ColorButton : MonoBehaviour
         return new Color(buttonColor.r, buttonColor.g, buttonColor.b, 1.0f);
     }
 
-    public void SetAsDefault() // TODO: FIX
+    public void SetAsDefault()
     {
         if (currentlySelectedButton != null && currentlySelectedButton != this)
         {
@@ -92,7 +92,7 @@ public class ColorButton : MonoBehaviour
             }
         }
 
-        transform.localScale = originalScale * 1.2f;
+        transform.localScale = originalScale * 1.2f; 
 
         if (transform.localScale.magnitude < 0.01f)
         {

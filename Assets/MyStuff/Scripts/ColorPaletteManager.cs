@@ -104,7 +104,7 @@ public class ColorPaletteManager : MonoBehaviour
             {
                 Color newColor = palette.colors[i];
 
-                //update button colors
+                // update button colors
                 button.SetButtonColor(newColor);
                 Renderer renderer = button.GetComponent<Renderer>();
             }

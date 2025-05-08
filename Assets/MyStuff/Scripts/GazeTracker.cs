@@ -8,14 +8,14 @@ public class GazeTracker : MonoBehaviour
     [SerializeField] private Transform gazeOrigin; 
     [SerializeField] private LayerMask trackingLayers;
     [SerializeField] private float rayDistance = 20f;
-    [SerializeField] private float gazeYOffset = 0.15f;
+    [SerializeField] private float gazeYOffset = 0.15f; // offset to the default VR template settings
 
     [Header("Areas to Track")]
     [SerializeField] private GameObject instructionsArea;
     [SerializeField] private GameObject networkArea;
     [SerializeField] private GameObject colorPaletteArea;
 
-    private string currentGazeArea = "None";
+    private string currentGazePanel = "None";
     private float gazeStartTime;
     private Dictionary<string, float> areaDurations = new Dictionary<string, float>();
 
@@ -52,42 +52,42 @@ public class GazeTracker : MonoBehaviour
         {
 
             // get gaze panel (instructions, color ui, icon panel)
-            string newGazeArea = DetermineGazeArea(hit.transform.gameObject);
+            string newGazeArea = DetermineGazePanel(hit.transform.gameObject);
             
-            if (newGazeArea != currentGazeArea)
+            if (newGazeArea != currentGazePanel)
             {
                 float duration = Time.time - gazeStartTime;
-                areaDurations[currentGazeArea] += duration;
+                areaDurations[currentGazePanel] += duration;
 
                 if (testTimer != null)
                 {
-                    testTimer.RecordGaze(currentGazeArea, duration);
+                    testTimer.RecordGaze(currentGazePanel, duration);
                 }
 
                 // update gaze panel area
-                currentGazeArea = newGazeArea;
+                currentGazePanel = newGazeArea;
                 gazeStartTime = Time.time;
             }
         }
         else
         {
-            if (currentGazeArea != "None")
+            if (currentGazePanel != "None")
             {
                 float duration = Time.time - gazeStartTime;
-                areaDurations[currentGazeArea] += duration;
+                areaDurations[currentGazePanel] += duration;
 
                 if (testTimer != null)
                 {
-                    testTimer.RecordGaze(currentGazeArea, duration);
+                    testTimer.RecordGaze(currentGazePanel, duration);
                 }
 
-                currentGazeArea = "None";
+                currentGazePanel = "None";
                 gazeStartTime = Time.time;
             }
         }
     }
 
-    private string DetermineGazeArea(GameObject hitObject)
+    private string DetermineGazePanel(GameObject hitObject)
     {
         Transform current = hitObject.transform;
 
@@ -111,12 +111,12 @@ public class GazeTracker : MonoBehaviour
     {
         // gaze time for current panel
         float duration = Time.time - gazeStartTime;
-        areaDurations[currentGazeArea] += duration;
+        areaDurations[currentGazePanel] += duration;
 
         // record timer only for tests and not tutorial
         if (testTimer != null)
         {
-            testTimer.RecordGaze(currentGazeArea, duration);
+            testTimer.RecordGaze(currentGazePanel, duration);
         }
 
         gazeStartTime = Time.time;
