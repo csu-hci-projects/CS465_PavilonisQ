@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit;
 using System.Collections;
+using static Unity.VisualScripting.Member;
+using static UnityEngine.GraphicsBuffer;
+using UnityEditor.MemoryProfiler;
 
 public class TestManager : MonoBehaviour
 {
@@ -48,77 +51,94 @@ public class TestManager : MonoBehaviour
         }
     }
 
+
     private void Start()
     {
-        if (nextTaskButton != null)
-        {
-            XRSimpleInteractable buttonInteractable = nextTaskButton.GetComponent<XRSimpleInteractable>();
-            if (buttonInteractable != null)
-            {
-                buttonInteractable.selectEntered.AddListener(OnNextButtonSelected);
-            }
-        }
-
-        if (iconLayoutManager != null)
-        {
-            iconLayoutManager.ApplyLayout(0);
-        }
-        NextTask();
-
-    }
-
-    private void OnNextButtonSelected(SelectEnterEventArgs args)
-    {
+        nextTaskButton.GetComponent<XRSimpleInteractable>().selectEntered.AddListener((args) => NextTask());
+        iconLayoutManager.ApplyLayout(0);
         NextTask();
     }
+
 
     public void NextTask()
     {
-        // reset test
-        correctConnections.Clear();
-        ClearCheckMarks();
-
-        // reset test data
-        pendingConnections.Clear();
-        completedConnections.Clear();
-
-        // reset timer
-        TestTimer testTimer = FindObjectOfType<TestTimer>();
-        if (testTimer != null && currentTaskIndex >= 0)
-        {
-            testTimer.StopTest();
-        }
-
-        // panel gaze data output
-        GazeTracker gazeTracker = FindObjectOfType<GazeTracker>();
-        if (gazeTracker != null)
-        {
-            gazeTracker.RecordFinalGazeDuration();
-        }
+        resetTest();
 
         currentTaskIndex++;
-
         if (currentTaskIndex >= tasks.Length)
         {
+            // test over when test 3 complete
             CompleteTest();
             return;
         }
 
+        setNextTest();
+        setTestConnections();
+        startTimer();
+    }
+
+
+    public void CheckTestProgress(GameObject source, GameObject target, int colorIndex = -1)
+    {
+        if (currentTaskIndex < 0 || currentTaskIndex >= tasks.Length)
+            return;
+
+        NetworkingTask task = tasks[currentTaskIndex];
+
+        checkTestConnections(task, source, target, colorIndex);
+
+        if (task.IsCompleted())
+        {
+            testUI.ShowNextTaskButton(true);
+        }
+    }
+
+
+    private void resetTest()
+    {
+        correctConnections.Clear();
+        ClearCheckMarks();
+        pendingConnections.Clear();
+        completedConnections.Clear();
+
+        TestTimer testTimer = FindObjectOfType<TestTimer>();
+        if (currentTaskIndex >= 0)
+        {
+            testTimer.StopTest();
+        }
+
+        GazeTracker gazeTracker = FindObjectOfType<GazeTracker>();
+        gazeTracker.RecordFinalGazeDuration();
+    }
+
+
+    private void startTimer()
+    {
+        TestTimer testTimer = FindObjectOfType<TestTimer>();
+        testTimer.StartTest(currentTaskIndex);
+    }
+
+
+    private void setNextTest()
+    {
+        // set device icon layout for tests
         iconLayoutManager.ApplyLayout(currentTaskIndex);
 
         // reset connections
-        if (selectionManager != null)
-        {
-            selectionManager.ClearAllConnections();
-        }
+        selectionManager.ClearAllConnections();
 
-        // set next task/test
+        // set next test
         NetworkingTask task = tasks[currentTaskIndex];
         testUI.SetInstructions(task.instructions);
         testUI.SetHint(task.hint);
         testUI.SetProgress(currentTaskIndex + 1, tasks.Length);
         testUI.ShowNextTaskButton(false);
+    }
 
+
+    private void setTestConnections()
+    {
+        NetworkingTask task = tasks[currentTaskIndex];
         // required connection amount
         foreach (NetworkingTask.RequiredConnection connection in task.requiredConnections)
         {
@@ -148,22 +168,11 @@ public class TestManager : MonoBehaviour
                 pendingConnections[connection.targetDeviceName]++;
             }
         }
-
-        // start timer
-        if (testTimer != null)
-        {
-            testTimer.StartTest(currentTaskIndex);
-        }
     }
 
-    public void CheckTaskProgress(GameObject source, GameObject target, int colorIndex = -1)
+
+    private void checkTestConnections(NetworkingTask task, GameObject source, GameObject target, int colorIndex)
     {
-        if (currentTaskIndex < 0 || currentTaskIndex >= tasks.Length)
-            return;
-
-        NetworkingTask task = tasks[currentTaskIndex];
-
-        // checks if connection is for this task 
         foreach (NetworkingTask.RequiredConnection connection in task.requiredConnections)
         {
             if ((connection.sourceDeviceName == source.name && connection.targetDeviceName == target.name) ||
@@ -174,42 +183,12 @@ public class TestManager : MonoBehaviour
                 // gets color requirement
                 if (connection.requiredColorIndex < 0 || connection.requiredColorIndex == colorIndex)
                 {
-                    bool wasAlreadyCorrect = connection.correctColor;
-                    connection.correctColor = true;
-
-                    // add connection to correct
-                    if (!wasAlreadyCorrect)
-                    {
-                        correctConnections.Add(new ConnectionPair(source.name, target.name));
-
-                        if (completedConnections.ContainsKey(source.name))
-                        {
-                            completedConnections[source.name]++;
-
-                            // checks requirements
-                            if (completedConnections[source.name] >= pendingConnections[source.name])
-                            {
-                                ShowCheckmark(source);
-                            }
-                        }
-
-                        if (completedConnections.ContainsKey(target.name))
-                        {
-                            completedConnections[target.name]++;
-
-                            // check all connections for multi connection icons
-                            if (completedConnections[target.name] >= pendingConnections[target.name])
-                            {
-                                ShowCheckmark(target);
-                            }
-                        }
-                    }
+                    addConnection(connection, source, target);
                 }
                 else
                 {
                     connection.correctColor = false;
                     TestTimer testTimer = FindObjectOfType<TestTimer>();
-
                     if (testTimer != null)
                     {
                         testTimer.RecordError("WrongColor", source.name, target.name,
@@ -218,32 +197,21 @@ public class TestManager : MonoBehaviour
                 }
             }
         }
-
-        if (task.IsCompleted())
-        {
-            testUI.ShowNextTaskButton(true);
-        }
     }
+
 
     private void CompleteTest()
     {
         TestTimer testTimer = FindObjectOfType<TestTimer>();
-        if (testTimer != null)
-        {
-            testTimer.StopTest();
-            TestDataOutput output = new TestDataOutput(testTimer);
-            if (testTimer != null)
-            {
-                testTimer.StopTest();
-                TestDataOutput dataOutput = new TestDataOutput(testTimer);
-                dataOutput.SaveDataToFile();
-            }
-        }
+        testTimer.StopTest();
+        TestDataOutput dataOutput = new TestDataOutput(testTimer);
+        dataOutput.SaveDataToFile();
 
         testUI.SetInstructions("All tests completed! Thank you for participating.");
         testUI.SetHint("");
         testUI.SetProgress(tasks.Length, tasks.Length);
     }
+
 
     private void ShowCheckmark(GameObject device)
     {
@@ -258,6 +226,7 @@ public class TestManager : MonoBehaviour
         checkMarks.Add(checkMark);
     }
 
+
     private void ClearCheckMarks()
     {
         foreach (GameObject check in checkMarks)
@@ -268,6 +237,36 @@ public class TestManager : MonoBehaviour
         checkMarks.Clear();
     }
 
+
+    private void updateConnections(GameObject device)
+    {
+        if (completedConnections.ContainsKey(device.name))
+        {
+            completedConnections[device.name]++;
+
+            // check all connections for icons with multiple required connections
+            if (completedConnections[device.name] >= pendingConnections[device.name])
+            {
+                ShowCheckmark(device);
+            }
+        }
+    }
+
+
+    private void addConnection(NetworkingTask.RequiredConnection connection, GameObject source, GameObject target)
+    {
+        bool wasAlreadyCorrect = connection.correctColor;
+        connection.correctColor = true;
+
+        if (!wasAlreadyCorrect)
+        {
+            correctConnections.Add(new ConnectionPair(source.name, target.name));
+            updateConnections(source);
+            updateConnections(target);
+        }
+    }
+
+
     public int GetTestCount()
     {
         if (tasks == null)
@@ -275,7 +274,8 @@ public class TestManager : MonoBehaviour
         return tasks.Length - 1;
     }
 
-    public bool IsConnectionCorrect(string device1Name, string device2Name)
+
+    public bool connectionCompleted(string device1Name, string device2Name)
     {
         foreach (ConnectionPair pair in correctConnections)
         {

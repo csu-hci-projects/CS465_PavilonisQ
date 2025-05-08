@@ -70,7 +70,7 @@ public class SimpleSelectionManager : MonoBehaviour
                     if (defaultButton != null)
                     {
                         currentLineColor = defaultButton.GetButtonColor();
-                        defaultButton.ForceSelection(new Vector3(0.4441015f, 0.409564f, 0.01f)); //position of the WAN button (default selected color button)
+                        defaultButton.ForceSelection(new Vector3(0.4441015f, 0.409564f, 0.01f)); // position of the WAN button (default selected color button)
                     }
             }
         }
@@ -121,7 +121,7 @@ public class SimpleSelectionManager : MonoBehaviour
             {
                 // check if connection is correct (cannot remove correct), remove if not
                 TestManager testManager = FindObjectOfType<TestManager>();
-                if (testManager != null && testManager.IsConnectionCorrect(firstSelectedIcon.name, secondSelectedIcon.name))
+                if (testManager != null && testManager.connectionCompleted(firstSelectedIcon.name, secondSelectedIcon.name))
                 {
                     // deselect icon
                     RemoveOutline(firstSelectedIcon);
@@ -198,7 +198,7 @@ public class SimpleSelectionManager : MonoBehaviour
         TestManager testManager = FindObjectOfType<TestManager>();
         if (testManager != null)
         {
-            testManager.CheckTaskProgress(fromIcon, toIcon, currentColorIndex);
+            testManager.CheckTestProgress(fromIcon, toIcon, currentColorIndex);
         }
     }
 
