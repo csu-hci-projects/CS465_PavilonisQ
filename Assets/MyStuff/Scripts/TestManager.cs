@@ -1,12 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit;
-using System.Collections;
-using static Unity.VisualScripting.Member;
-using static UnityEngine.GraphicsBuffer;
-using UnityEditor.MemoryProfiler;
 
 public class TestManager : MonoBehaviour
 {

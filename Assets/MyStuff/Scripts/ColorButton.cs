@@ -46,32 +46,23 @@ public class ColorButton : MonoBehaviour
             // reset selected icon scale to normal
             currentlySelectedButton.transform.localScale = currentlySelectedButton.originalScale;
 
-            // remove outline
-            Outline prevOutline = currentlySelectedButton.GetComponent<Outline>();
-            if (prevOutline != null)
-            {
-                prevOutline.enabled = false;
-            }
+            OutlineTool.RemoveOutline(currentlySelectedButton.gameObject);
         }
 
         // scale new selected icon
         transform.localScale = originalScale * 1.2f;
 
         // new outline
-        Outline outline = GetComponent<Outline>();
-        if (outline != null)
-        {
-            outline.enabled = true;
-        }
+        OutlineTool.AddOutline(gameObject, Color.white, 3f, Outline.Mode.OutlineAll);
 
         currentlySelectedButton = this;
 
         // set selected color on selectionManager
-        SimpleSelectionManager selectionManager = FindObjectOfType<SimpleSelectionManager>();
+        SimpleSelectionManager  selectionManager = FindObjectOfType<SimpleSelectionManager>();
         if (selectionManager != null)
         {
             int colorIndex = GetColorIndex();
-            selectionManager.SetConnectionColor(new Color(buttonColor.r, buttonColor.g, buttonColor.b, 1.0f), colorIndex);
+            selectionManager.SetConnectionColor(new Color(buttonColor.r,  buttonColor.g, buttonColor.b,1.0f), colorIndex);
         }
     }
 
@@ -135,7 +126,7 @@ public class ColorButton : MonoBehaviour
         }
     }
 
-    public static void UpdateSelectedButtonColor()
+    public static void  UpdateSelectedButtonColor()
     {
         if (currentlySelectedButton != null)
         {

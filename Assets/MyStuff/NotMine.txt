@@ -3,7 +3,7 @@ CODE/SCRIPTS/STUFF I USED THAT WAS NOT MINE AND DID NOT CHANGE:
    (selected VR template upon creating new Unity project)
  - Quick Outline Asset from Unity Store by Chris Nolet:    https://assetstore.unity.com/packages/tools/particles-effects/quick-outline-115488
  - Checkmark png from unity store package "Art by Kandles" by Kandles:    https://assetstore.unity.com/packages/2d/gui/icons/basic-icons-139575
-
+ - Visual studio name suggestions
 
 
 
@@ -26,9 +26,14 @@ controller/headset input tracking:
  - Unity XR Interaction Toolkit 3.0 Tutorial - Part 7 - Controller Tracking:          https://www.youtube.com/watch?v=M44edr-SNKc&t=631s
 
 variable reflection:
+ - https://medium.com/@Code_With_K/c-reflection-in-unity-a-complete-guide-for-game-   developers-bea6c7abaebf
  - https://medium.com/@Code_With_K/c-reflection-in-unity-a-complete-guide-for-game-developers-bea6c7abaebf
 
 Editor Scripting / Editor/GUILayout (for my IconLayoutManager)
  - https://docs.unity3d.com/ScriptReference/Editor.html
  - https://docs.unity3d.com/6000.0/Documentation/Manual/gui-Layout.html
  - Create Your Own CUSTOM INSPECTOR In Unity!:          https://youtu.be/kFLaS1Nyrdw?si=3ME8PZb5s8l-eN44
+ 
+ 
+custom script editor (for icon layout buttons)
+ - https://docs.unity3d.com/2020.1/Documentation/Manual/editor-CustomEditors.html

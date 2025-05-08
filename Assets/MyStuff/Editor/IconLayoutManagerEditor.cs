@@ -23,7 +23,7 @@ public class IconLayoutManagerEditor : Editor
         if (GUILayout.Button("Capture Current Layout"))
         {
             manager.CaptureCurrentLayout(newLayoutName, layoutIndexToSave);
-            EditorUtility.SetDirty(manager); // Mark the object as dirty so Unity saves changes
+            EditorUtility.SetDirty(manager);
         }
 
         GUILayout.Space(10);

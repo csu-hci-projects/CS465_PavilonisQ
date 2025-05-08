@@ -1,9 +1,6 @@
 using UnityEngine;
 using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-
 
 public class TestDataOutput
 {
@@ -109,7 +106,7 @@ public class TestDataOutput
             Directory.CreateDirectory(directoryPath);
         }
 
-        // create a unique file name for each test output, has color palette in filename
+        // creates a unique file name for each test output, has color palette in filename
         string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
         string colorPalette = GetColorPaletteName();
         string filename = $"{directoryPath}/ColorTest_{colorPalette}_{timestamp}.csv";
