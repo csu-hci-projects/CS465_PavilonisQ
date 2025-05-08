@@ -3,7 +3,7 @@ CODE/SCRIPTS/STUFF I USED THAT WAS NOT MINE AND DID NOT CHANGE:
    (selected VR template upon creating new Unity project)
  - Quick Outline Asset from Unity Store by Chris Nolet:    https://assetstore.unity.com/packages/tools/particles-effects/quick-outline-115488
  - Checkmark png from unity store package "Art by Kandles" by Kandles:    https://assetstore.unity.com/packages/2d/gui/icons/basic-icons-139575
-
+ - Visual studio name suggestions
 
 
 
@@ -27,3 +27,6 @@ controller/headset input tracking:
 
 variable reflection:
  - https://medium.com/@Code_With_K/c-reflection-in-unity-a-complete-guide-for-game-   developers-bea6c7abaebf
+
+custom script editor (for icon layout buttons)
+ - https://docs.unity3d.com/2020.1/Documentation/Manual/editor-CustomEditors.html

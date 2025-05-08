@@ -1,7 +1,5 @@
 using UnityEngine;
 using TMPro;
-using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -64,9 +62,9 @@ public class TestTimer : MonoBehaviour
 
     public class ErrorEvent
     {
-        public string ErrorType; // wrong connection and wrong color
-        public string IconDevice1; // first connected device
-        public string IconDevice2; // second conneced device
+        public string ErrorType;
+        public string IconDevice1; 
+        public string IconDevice2; 
         public int UsedColorIndex;
         public int RequiredColorIndex;
         public float TimeStamp;
@@ -80,7 +78,7 @@ public class TestTimer : MonoBehaviour
         testErrorCounts = new int[testCount];
 
         // reset timer
-        UpdateTimerDisplay(0);
+        UpdateTimer(0);
 
         // start all tracking sets
         colorUsageCounts = new Dictionary<int, int>[testCount];
@@ -109,7 +107,7 @@ public class TestTimer : MonoBehaviour
         if (isTimerRunning)
         {
             elapsedTime = Time.time - testStartTime;
-            UpdateTimerDisplay(elapsedTime);
+            UpdateTimer(elapsedTime);
         }
     }
 
@@ -123,13 +121,13 @@ public class TestTimer : MonoBehaviour
             testStartTime = Time.time;
             isTimerRunning = true;
             elapsedTime = 0f;
-            UpdateTimerDisplay(elapsedTime);
+            UpdateTimer(elapsedTime);
         }
         else
         {
             isTimerRunning = false;
             elapsedTime = 0f;
-            UpdateTimerDisplay(elapsedTime);
+            UpdateTimer(elapsedTime);
         }
     }
 
@@ -187,7 +185,7 @@ public class TestTimer : MonoBehaviour
         errorEvents[dataIndex].Add(error);
     }
 
-    private void UpdateTimerDisplay(float timeInSeconds)
+    private void UpdateTimer(float timeInSeconds)
     {
         if (timerText != null)
         {
@@ -197,9 +195,9 @@ public class TestTimer : MonoBehaviour
 
     private string FormatTime(float timeInSeconds)
     {
-        int minutes = Mathf.FloorToInt(timeInSeconds / 60);
-        int seconds = Mathf.FloorToInt(timeInSeconds % 60);
-        return string.Format("{0:00}:{1:00}", minutes, seconds);
+        int m = Mathf.FloorToInt(timeInSeconds / 60);
+        int s = Mathf.FloorToInt(timeInSeconds % 60);
+        return string.Format("{0:00}:{1:00}", m, s);
     }
 
 

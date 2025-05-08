@@ -15,7 +15,6 @@ public class SimpleSelectionManager : MonoBehaviour
     private GameObject secondSelectedIcon = null;
     private int currentColorIndex = 0;
     private Color currentLineColor = Color.white;
-
     private TestTimer testTimer;
     private TestManager testManager;
 
@@ -39,9 +38,10 @@ public class SimpleSelectionManager : MonoBehaviour
         }
     }
 
+
     private void Start()
     {
-        // grab all icons with XR simple script (network icons, menu buttons, color buttons)
+        // grab all icons with XR simple interactable script (network icons, menu buttons, color buttons)
         XRSimpleInteractable[] interactables = FindObjectsOfType<XRSimpleInteractable>();
 
         testTimer = FindObjectOfType<TestTimer>();
@@ -76,19 +76,14 @@ public class SimpleSelectionManager : MonoBehaviour
         }
      }
 
+
     private void OnIconSelected(SelectEnterEventArgs args)
     {
         GameObject selectedObject = args.interactableObject.transform.gameObject;
 
-        if (selectedObject.CompareTag("ColorButton"))
-        {
-            // only color function for color buttons
-            ColorButton colorButton = selectedObject.GetComponent<ColorButton>();
-            if (colorButton != null)
-            {
-                SetConnectionColor(colorButton.GetButtonColor(), colorButton.GetColorIndex());
-            }
-            return;
+        if (checkColorButton(selectedObject))
+        { 
+            return; 
         }
 
         // first icon, if nothing selected already
@@ -112,48 +107,77 @@ public class SimpleSelectionManager : MonoBehaviour
         // create connection if second icon is different from first
         else
         {
-            secondSelectedIcon = selectedObject;
-
-            // check for previous connection between two selected icons
-            ConnectionInfo existingConnection = FindConnection(firstSelectedIcon, secondSelectedIcon);
-
-            if (existingConnection != null)
-            {
-                // check if connection is correct (cannot remove correct), remove if not
-                TestManager testManager = FindObjectOfType<TestManager>();
-                if (testManager != null && testManager.connectionCompleted(firstSelectedIcon.name, secondSelectedIcon.name))
-                {
-                    // deselect icon
-                    RemoveOutline(firstSelectedIcon);
-                    firstSelectedIcon = null;
-                    secondSelectedIcon = null;
-                    return;
-                }
-                RemoveConnection(existingConnection);
-            }
-            else
-            {
-                // new connection
-                CreateConnection(firstSelectedIcon, secondSelectedIcon);
-
-                // record for completed connections (right and wrong)
-                if (testTimer != null)
-                {
-                    testTimer.RecordConnectionSecondDevice(firstSelectedIcon.name, secondSelectedIcon.name,
-                                                      currentColorIndex);
-                }
-            }
-
-            // remove highlight on first selected
-            RemoveOutline(firstSelectedIcon);
-
-            // resets
-            firstSelectedIcon = null;
-            secondSelectedIcon = null;
+            completeConnection(selectedObject);
         }
     }
 
-    // grab existing connections
+
+    private bool checkColorButton(GameObject selectedObject)
+    {
+        if (selectedObject.CompareTag("ColorButton"))
+        {
+            // only color function for color buttons
+            ColorButton colorButton = selectedObject.GetComponent<ColorButton>();
+            if (colorButton != null)
+            {
+                SetConnectionColor(colorButton.GetButtonColor(), colorButton.GetColorIndex());
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+    private void completeConnection(GameObject selectedObject)
+    {
+        secondSelectedIcon = selectedObject;
+
+        // check for previous connection between two selected icons
+        ConnectionInfo existingConnection = FindConnection(firstSelectedIcon, secondSelectedIcon);
+
+        if (existingConnection != null)
+        {
+            if (checkConnection())
+            {
+                return;
+            }
+            RemoveConnection(existingConnection);
+        }
+        else
+        {
+            CreateConnection(firstSelectedIcon, secondSelectedIcon);
+
+            if (testTimer != null)
+            {
+                testTimer.RecordConnectionSecondDevice(firstSelectedIcon.name, secondSelectedIcon.name,
+                                                  currentColorIndex);
+            }
+        }
+
+        // remove highlight on first selected
+        RemoveOutline(firstSelectedIcon);
+
+        // resets
+        firstSelectedIcon = null;
+        secondSelectedIcon = null;
+    }
+
+
+    private bool checkConnection()
+    {
+        // check if connection is correct (cannot remove correct), remove if not
+        if (testManager != null && testManager.connectionCompleted(firstSelectedIcon.name, secondSelectedIcon.name))
+        {
+            // deselect icon
+            RemoveOutline(firstSelectedIcon);
+            firstSelectedIcon = null;
+            secondSelectedIcon = null;
+            return true;
+        }
+        return false;
+    }
+
+
     private ConnectionInfo FindConnection(GameObject icon1, GameObject icon2)
     {
         foreach (ConnectionInfo connection in connections)
@@ -166,11 +190,13 @@ public class SimpleSelectionManager : MonoBehaviour
         return null;
     }
 
+
     private void RemoveConnection(ConnectionInfo connection)
     {
         connections.Remove(connection);
         Destroy(connection.connectionObject);
     }
+
 
     private void CreateConnection(GameObject fromIcon, GameObject toIcon)
     {
@@ -181,26 +207,19 @@ public class SimpleSelectionManager : MonoBehaviour
 
         GameObject lineObj = Instantiate(lineRendererPrefab);
         LineRenderer lineRenderer = lineObj.GetComponent<LineRenderer>();
-
-        if (lineRenderer != null)
-        {
-            //position
-            lineRenderer.positionCount = 2;
-            lineRenderer.SetPosition(0, fromIcon.transform.position);
-            lineRenderer.SetPosition(1, toIcon.transform.position);
-            //color
-            lineRenderer.startColor = currentLineColor;
-            lineRenderer.endColor = currentLineColor;
-
-            ConnectionInfo newConnection = new ConnectionInfo(lineObj, fromIcon, toIcon);
-            connections.Add(newConnection);
-        }
-        TestManager testManager = FindObjectOfType<TestManager>();
-        if (testManager != null)
-        {
-            testManager.CheckTestProgress(fromIcon, toIcon, currentColorIndex);
-        }
+        //position
+        lineRenderer.positionCount = 2;
+        lineRenderer.SetPosition(0, fromIcon.transform.position);
+        lineRenderer.SetPosition(1, toIcon.transform.position);
+        //color
+        lineRenderer.startColor = currentLineColor;
+        lineRenderer.endColor = currentLineColor;
+        // connection
+        ConnectionInfo newConnection = new ConnectionInfo(lineObj, fromIcon, toIcon);
+        connections.Add(newConnection);
+        testManager.CheckTestProgress(fromIcon, toIcon, currentColorIndex);
     }
+
 
     public void SetConnectionColor(Color color, int colorIndex = -1)
 {
@@ -212,6 +231,7 @@ public class SimpleSelectionManager : MonoBehaviour
         testTimer.RecordColorNameForCSV(colorIndex);
     }
 }
+
 
     public void ClearAllConnections()
     {
@@ -232,28 +252,16 @@ public class SimpleSelectionManager : MonoBehaviour
         }
     }
 
+
     private void AddOutline(GameObject obj)
     {
-        Outline outline = obj.GetComponent<Outline>();
-        if (outline == null)
-        {
-            outline = obj.AddComponent<Outline>();
-        }
-
-        outline.OutlineColor = outlineColor;
-        outline.OutlineWidth = outlineWidth;
-        outline.OutlineMode = outlineMode;
-        outline.enabled = true;
+        OutlineTool.AddOutline(obj, outlineColor, outlineWidth, outlineMode);    
     }
+
 
     private void RemoveOutline(GameObject obj)
     {
-        Outline outline = obj.GetComponent<Outline>();
-
-        if (outline != null)
-        {
-            outline.enabled = false;
-        }
+        OutlineTool.RemoveOutline(obj);
     }
 
 
