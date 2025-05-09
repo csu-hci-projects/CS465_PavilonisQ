@@ -3836,11 +3836,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1471128967}
   m_SourcePrefab: {fileID: 100100000, guid: e6f9f56ce09e1004b9505ac6fa2fa86b, type: 3}
---- !u!4 &442352429 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8827957376201152162, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
-  m_PrefabInstance: {fileID: 2779669268269126897}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &465781721
 GameObject:
   m_ObjectHideFlags: 0
@@ -6867,32 +6862,6 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
---- !u!1 &906589520 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7277802327414017194, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
-  m_PrefabInstance: {fileID: 2779669268269126897}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &906589526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 906589520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 972771307ea81db409759d467bc70fc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gazeOrigin: {fileID: 442352429}
-  trackingLayers:
-    serializedVersion: 2
-    m_Bits: 33
-  rayDistance: 20
-  gazeYOffset: 0.15
-  instructionsArea: {fileID: 1429839022}
-  networkArea: {fileID: 2137842243}
-  colorPaletteArea: {fileID: 1400472747}
 --- !u!1 &919388744
 GameObject:
   m_ObjectHideFlags: 0
@@ -14216,10 +14185,7 @@ PrefabInstance:
     - {fileID: 6478689656660321206, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
     - {fileID: 6478689656935193153, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7277802327414017194, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 906589526}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77e7c27b2c5525e4aa8cc9f99d654486, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

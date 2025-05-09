@@ -30,7 +30,7 @@ public class ColorButton : MonoBehaviour
 
         // adds outline component to icons but disbables for start
         Outline outline = gameObject.GetComponent<Outline>();
-        if (outline == null)
+        if (outline == null )
         {
             outline = gameObject.AddComponent<Outline>();
             outline.OutlineColor = Color.white;
@@ -39,13 +39,12 @@ public class ColorButton : MonoBehaviour
         }
     }
 
-    private void OnSelected(SelectEnterEventArgs args)
+    private void  OnSelected(SelectEnterEventArgs args)
     {
+         // reset previous color button size/outline
         if (currentlySelectedButton != null && currentlySelectedButton != this)
         {
-            // reset selected icon scale to normal
             currentlySelectedButton.transform.localScale = currentlySelectedButton.originalScale;
-
             OutlineTool.RemoveOutline(currentlySelectedButton.gameObject);
         }
 
@@ -53,7 +52,7 @@ public class ColorButton : MonoBehaviour
         transform.localScale = originalScale * 1.2f;
 
         // new outline
-        OutlineTool.AddOutline(gameObject, Color.white, 3f, Outline.Mode.OutlineAll);
+        OutlineTool.AddOutline(gameObject,  Color.white, 3f, Outline.Mode.OutlineAll);
 
         currentlySelectedButton = this;
 
@@ -61,7 +60,7 @@ public class ColorButton : MonoBehaviour
         SimpleSelectionManager  selectionManager = FindObjectOfType<SimpleSelectionManager>();
         if (selectionManager != null)
         {
-            int colorIndex = GetColorIndex();
+            int  colorIndex = GetColorIndex();
             selectionManager.SetConnectionColor(new Color(buttonColor.r,  buttonColor.g, buttonColor.b,1.0f), colorIndex);
         }
     }
@@ -87,7 +86,7 @@ public class ColorButton : MonoBehaviour
 
         if (transform.localScale.magnitude < 0.01f)
         {
-            transform.localScale = new Vector3(0.4441015f, 0.409564f, 0.01f);
+            transform.localScale = new Vector3(0.4441015f,  0.409564f, 0.01f); // makes selected color button larger
         }
 
         Outline outline = GetComponent<Outline>();
@@ -95,20 +94,7 @@ public class ColorButton : MonoBehaviour
         {
             outline.enabled = true;
         }
-        currentlySelectedButton = this;
-    }
-
-    public void ForceSelection(Vector3 selectedScale)
-    {
-        transform.localScale = selectedScale;
-
-        Outline outline = GetComponent<Outline>();
-        if (outline != null)
-        {
-            outline.enabled = true;
-        }
-
-        currentlySelectedButton = this;
+           currentlySelectedButton = this;
     }
 
     public void SetButtonColor(Color newColor)
@@ -118,7 +104,7 @@ public class ColorButton : MonoBehaviour
         Renderer renderer = GetComponent<Renderer>();
         if (renderer != null)
         {
-            renderer.material.color = buttonColor;
+             renderer.material.color = buttonColor;
         }
         if (gameObject.name == "Color2")
         {
@@ -141,15 +127,15 @@ public class ColorButton : MonoBehaviour
     public int GetColorIndex()
     {
         string buttonName = gameObject.name;
-        if (buttonName.StartsWith("Color") && buttonName.Length > 5)
+        if (buttonName.StartsWith("Color" ) &&  buttonName.Length > 5)
         {
             if (int.TryParse(buttonName.Substring(5), out int index))
             {
-                return index - 1;
+                 return index - 1;
             }
         }
 
-        ColorPaletteManager paletteManager = Object.FindObjectOfType<ColorPaletteManager>();
+        ColorPaletteManager paletteManager =  Object.FindObjectOfType<ColorPaletteManager>();
         if (paletteManager != null)
         {
             return paletteManager.GetButtonIndex(this);

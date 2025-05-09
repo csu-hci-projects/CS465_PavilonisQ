@@ -38,7 +38,7 @@ public class TestManager : MonoBehaviour
         }
 
         // check if connection passes reuquirements
-        public bool Contains(string device1, string device2)
+        public bool Contains(string device1,  string device2)
         {
             return (Device1Name == device1 && Device2Name == device2) ||
                    (Device1Name == device2 && Device2Name == device1);
@@ -72,7 +72,7 @@ public class TestManager : MonoBehaviour
     }
 
 
-    public void CheckTestProgress(GameObject source, GameObject target, int colorIndex = -1)
+    public void CheckTestProgress(GameObject source,  GameObject target, int colorIndex = -1)
     {
         if (currentTaskIndex < 0 || currentTaskIndex >= tasks.Length)
             return;
@@ -100,9 +100,6 @@ public class TestManager : MonoBehaviour
         {
             testTimer.StopTest();
         }
-
-        GazeTracker gazeTracker = FindObjectOfType<GazeTracker>();
-        gazeTracker.RecordFinalGazeDuration();
     }
 
 
@@ -118,7 +115,7 @@ public class TestManager : MonoBehaviour
         // set device icon layout for tests
         iconLayoutManager.ApplyLayout(currentTaskIndex);
 
-        // reset connections
+        //  reset connections
         selectionManager.ClearAllConnections();
 
         // set next test
@@ -165,7 +162,7 @@ public class TestManager : MonoBehaviour
     }
 
 
-    private void checkTestConnections(NetworkingTask task, GameObject source, GameObject target, int colorIndex)
+     private void checkTestConnections(NetworkingTask task, GameObject source, GameObject target, int colorIndex )
     {
         foreach (NetworkingTask.RequiredConnection connection in task.requiredConnections)
         {
@@ -185,7 +182,7 @@ public class TestManager : MonoBehaviour
                     TestTimer testTimer = FindObjectOfType<TestTimer>();
                     if (testTimer != null)
                     {
-                        testTimer.RecordError("WrongColor", source.name, target.name,
+                        testTimer.RecordError(source.name, target.name,
                                                      colorIndex, connection.requiredColorIndex);
                     }
                 }
@@ -209,10 +206,10 @@ public class TestManager : MonoBehaviour
 
     private void ShowCheckmark(GameObject device)
     {
-        GameObject checkMark = new GameObject($"{device.name}Checkmark");
+        GameObject checkMark = new  GameObject($"{device.name}Checkmark");
         SpriteRenderer renderer = checkMark.AddComponent<SpriteRenderer>();
 
-        renderer.sprite = checkmarkSprite;
+        renderer.sprite =   checkmarkSprite;
         checkMark.transform.position = device.transform.position + new Vector3(-0.09f, 0.22f, -0.05f); // checkmark slightly above icon position
         checkMark.transform.forward = Camera.main.transform.forward;
         checkMark.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
@@ -223,7 +220,7 @@ public class TestManager : MonoBehaviour
 
     private void ClearCheckMarks()
     {
-        foreach (GameObject check in checkMarks)
+        foreach (GameObject check in checkMarks )
         {
             if (check != null)
                 Destroy(check);
@@ -247,7 +244,7 @@ public class TestManager : MonoBehaviour
     }
 
 
-    private void addConnection(NetworkingTask.RequiredConnection connection, GameObject source, GameObject target)
+    private void addConnection(NetworkingTask.RequiredConnection connection, GameObject source,  GameObject target)
     {
         bool wasAlreadyCorrect = connection.correctColor;
         connection.correctColor = true;
@@ -263,7 +260,7 @@ public class TestManager : MonoBehaviour
 
     public int GetTestCount()
     {
-        if (tasks == null)
+        if (tasks == null )
             return 0;
         return tasks.Length - 1;
     }

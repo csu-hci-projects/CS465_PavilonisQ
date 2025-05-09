@@ -1,7 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit;
-using TMPro;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class TutorialManager : MonoBehaviour
@@ -10,14 +7,11 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject[] tutorialSlides;
     [SerializeField] private TestManager testManager;
 
-    private int currentSlideIndex = 0;
+    private int  currentSlideIndex = 0;
 
     private void Start()
     {
-        // show tutorial before tests
-        if (tutorialCanvas == null)
-            tutorialCanvas = this.gameObject;
-
+        tutorialCanvas = this.gameObject;
         tutorialCanvas.SetActive(true);
 
         // set first slide active only
@@ -58,7 +52,7 @@ public class TutorialManager : MonoBehaviour
     public void GoToNextSlide(int currentIndex)
     {
         tutorialSlides[currentIndex].SetActive(false);
-        int nextIndex = currentIndex + 1;
+        int nextIndex = currentIndex +  1;
         if (nextIndex < tutorialSlides.Length)
         {
             tutorialSlides[nextIndex].SetActive(true);
@@ -68,7 +62,7 @@ public class TutorialManager : MonoBehaviour
 
     public void CloseTutorial()
     {
-        tutorialCanvas.SetActive(false);
-        Time.timeScale = 1f;
+         tutorialCanvas.SetActive(false);
+          Time.timeScale = 1f;
     }
 }
