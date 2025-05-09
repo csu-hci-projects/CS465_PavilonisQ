@@ -33,6 +33,10 @@ INSTRUCTIONS:
 8. Test runner can use keyboard keys 1-4 to change color palette used
 9. csv data output to TestData directory in Assets, directory is created if not present
 
+Video Links:
+Final Presentation Video: https://youtu.be/j8UX5ThJTFI
+Final Short Video: https://youtu.be/Xq4jJsbf4pY
+Final Code Video: https://youtu.be/Yh18-XXjzjQ
 
 Link to Text file of code/assets that arent mine:
 https://github.com/csu-hci-projects/CS465_PavilonisQ/blob/main/Assets/MyStuff/NotMine.txt
