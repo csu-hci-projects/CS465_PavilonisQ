@@ -1,9 +1,16 @@
 CODE/SCRIPTS/STUFF I USED THAT WAS NOT MINE AND DID NOT CHANGE:
  - Unity VR Starter Template - used XR Origin controller/gaze/camera setup
    (selected VR template upon creating new Unity project)
- - Quick Outline Asset from Unity Store by Chris Nolet:    https://assetstore.unity.com/packages/tools/particles-effects/quick-outline-115488
+
+ - Quick Outline Asset from Unity Store by Chris Nolet:    
+https://assetstore.unity.com/packages/tools/particles-effects/quick-outline-115488
  - Checkmark png from unity store package "Art by Kandles" by Kandles:    https://assetstore.unity.com/packages/2d/gui/icons/basic-icons-139575
+
  - Visual studio name suggestions
+
+ - One Way ANOVA anaylsis in Python using pengouin library:
+https://pingouin-stats.org/build/html/generated/pingouin.anova.html
+https://www.statology.org/how-to-conduct-one-way-anova-in-python-using-pingouin/
 
 
 
@@ -30,3 +37,14 @@ variable reflection:
 
 custom script editor (for icon layout buttons)
  - https://docs.unity3d.com/2020.1/Documentation/Manual/editor-CustomEditors.html
+
+
+ - data simulation in python:
+https://towardsdatascience.com/step-by-step-guide-to-creating-simulated-data-in-python-0845e13e297c/
+
+ - Python Statistics - Probability Distributions in SciPy: https://www.youtube.com/watch?v=3IdJGL_gFYw
+
+ - Matplotlib Tutorial (Part 1): Creating and Custokmizing Our First Plots: https://youtu.be/UO98lJQ3QGI?si=KZUdX-0ppEiEac1v
+
+
+

@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.31)  8 MAY 2025 11:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.31)  9 MAY 2025 02:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/qmp_/Desktop/ResearchPaper/CS_465_Pavilonis_Quintin_Research_Paper
-(c:/Users/qmp_/Desktop/ResearchPaper/CS_465_Pavilonis_Quintin_Research_Paper.tex
+**d:/NEWNEWVRPROJECT/network-color-pal/ResearchPaper/CS_465_Pavilonis_Quintin_Research_Paper
+(d:/NEWNEWVRPROJECT/network-color-pal/ResearchPaper/CS_465_Pavilonis_Quintin_Research_Paper.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
 (./acmart.cls
@@ -831,34 +831,37 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
  [2.2{c:/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_afusau.enc}] [3.3]
-<completion_time_test1_analysis_20250504_061112.png, id=149, 867.24pt x 433.62pt>
-File: completion_time_test1_analysis_20250504_061112.png Graphic file (type png)
-<use completion_time_test1_analysis_20250504_061112.png>
-Package pdftex.def Info: completion_time_test1_analysis_20250504_061112.png  used on input line 285.
-(pdftex.def)             Requested size: 361.83737pt x 180.92157pt.
+<completion_time_test1.png, id=149, 867.24pt x 578.16pt>
+File: completion_time_test1.png Graphic file (type png)
+<use completion_time_test1.png>
+Package pdftex.def Info: completion_time_test1.png  used on input line 285.
+(pdftex.def)             Requested size: 361.83737pt x 241.22876pt.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
 (Font)              scaled to size 9.0pt on input line 286.
 
 
 Class acmart Warning: A possible image without description on input line 288.
 
-[4.4 <./completion_time_test1_analysis_20250504_061112.png>]
-<errorcounttest1and3.png, id=157, 2710.125pt x 1355.0625pt>
-File: errorcounttest1and3.png Graphic file (type png)
-<use errorcounttest1and3.png>
-Package pdftex.def Info: errorcounttest1and3.png  used on input line 295.
-(pdftex.def)             Requested size: 361.83737pt x 180.91992pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [4.4]
+<error_count_test1_and3.png, id=155, 1896.33469pt x 637.63219pt>
+File: error_count_test1_and3.png Graphic file (type png)
+<use error_count_test1_and3.png>
+Package pdftex.def Info: error_count_test1_and3.png  used on input line 295.
+(pdftex.def)             Requested size: 452.295pt x 152.08136pt.
 
 
 Class acmart Warning: A possible image without description on input line 298.
 
-[5.5 <./errorcounttest1and3.png>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [6.6] (./CS_465_Pavilonis_Quintin_Research_Paper.bbl
+[5.5 <./completion_time_test1.png> <./error_count_test1_and3.png>] [6.6] (./CS_465_Pavilonis_Quintin_Research_Paper.bbl
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 8.0pt on input line 46.
-)
+
+Underfull \vbox (badness 7099) has occurred while \output is active []
+
+ [7.7])
 
 Class acmart Warning: Some images may lack descriptions.
 
@@ -869,7 +872,7 @@ Class acmart Warning: \vspace should only be used to provide space above/below s
 File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
 ) (c:/texlive/2024/texmf-dist/tex/generic/stringenc/se-utf8.def
 File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
-) [7.7] (./CS_465_Pavilonis_Quintin_Research_Paper.aux)
+) [8.8] (./CS_465_Pavilonis_Quintin_Research_Paper.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
@@ -878,18 +881,18 @@ Package rerunfilecheck Info: File `CS_465_Pavilonis_Quintin_Research_Paper.out' 
 (rerunfilecheck)             Checksum: 0F1BBCE5F5D36896FAB496CE3F4A3890;4103.
  ) 
 Here is how much of TeX's memory you used:
- 20939 strings out of 474103
- 335770 string characters out of 5747481
+ 20937 strings out of 474103
+ 335595 string characters out of 5747481
  1944496 words of memory out of 5000000
  42448 multiletter control sequences out of 15000+600000
- 686503 words of font info for 289 fonts, out of 8000000 for 9000
+ 686228 words of font info for 287 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 90i,13n,131p,1390b,632s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,13n,131p,1405b,689s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/public/libertine/LinBiolinumT.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/libertine/LinBiolinumTB.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/libertine/LinLibertineTB.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/libertine/LinLibertineTI.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/newtx/txsys.pfb>
-Output written on CS_465_Pavilonis_Quintin_Research_Paper.pdf (7 pages, 709042 bytes).
+Output written on CS_465_Pavilonis_Quintin_Research_Paper.pdf (8 pages, 472355 bytes).
 PDF statistics:
- 229 PDF objects out of 1000 (max. 8388607)
- 196 compressed objects within 2 object streams
- 43 named destinations out of 1000 (max. 500000)
+ 233 PDF objects out of 1000 (max. 8388607)
+ 199 compressed objects within 2 object streams
+ 44 named destinations out of 1000 (max. 500000)
  76011 words of extra memory for PDF output out of 89155 (max. 10000000)
 
