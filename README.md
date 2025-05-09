@@ -16,3 +16,23 @@
 
 
 ## Final Submission ##
+REQUIREMENTS:
+Meta Quest 3
+Unity 2022.3.50f1
+C# for Windows  unity package
+
+
+INSTRUCTIONS:
+1. Download and open project in Unity version 2022.3.50f1
+2. Navigate to scene called Tutorial
+3. Connect quest 3 headset via link cable
+4. Run meta horizon app
+5. Open File -> build settings, and set to your device OS
+6. Either use play mode or File -> Compile and run to run standalone
+7. Quest 3 controllers use front index finger trigger to select buttons/icons, either controller can be used
+8. Test runner can use keyboard keys 1-4 to change color palette used
+9. csv data output to TestData directory in Assets, directory is created if not present
+
+
+Link to Text file of code/assets that arent mine:
+https://github.com/csu-hci-projects/CS465_PavilonisQ/blob/main/Assets/MyStuff/NotMine.txt
