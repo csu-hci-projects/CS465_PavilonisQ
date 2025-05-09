@@ -25,7 +25,7 @@ public static class OutlineTool
 
         if (outline != null)
         {
-            outline.enabled = false;
+             outline.enabled = false;
         }
     }
 }

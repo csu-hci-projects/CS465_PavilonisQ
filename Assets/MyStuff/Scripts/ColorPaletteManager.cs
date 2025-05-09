@@ -96,7 +96,7 @@ public class ColorPaletteManager : MonoBehaviour
         ColorPalette palette = colorPalettes[paletteIndex];
 
         // update colors
-        for (int i = 0; i < 4 && i < colorButtons.Length; i++)
+        for ( int i = 0; i < 4 && i < colorButtons.Length; i++)
         {
             ColorButton button = colorButtons[i];
             if (button != null)
@@ -105,7 +105,7 @@ public class ColorPaletteManager : MonoBehaviour
 
                 // update button colors
                 button.SetButtonColor(newColor);
-                Renderer renderer = button.GetComponent<Renderer>();
+                Renderer renderer  =  button.GetComponent<Renderer>();
             }
         }
 

@@ -5,8 +5,8 @@ using TMPro;
 public class TestUI : MonoBehaviour
 {
     [Header("UI Elements")]
-    [SerializeField] private TextMeshProUGUI instructionsText;
-    [SerializeField] private TextMeshProUGUI hintText;
+    [SerializeField] private  TextMeshProUGUI instructionsText;
+    [SerializeField] private  TextMeshProUGUI hintText;
     [SerializeField] private TextMeshProUGUI progressText;
     [SerializeField] private GameObject nextTaskButton;
 
@@ -42,7 +42,7 @@ public class TestUI : MonoBehaviour
     {
         if (hintText != null)
         {
-            hintText.gameObject.SetActive(false);
+             hintText.gameObject.SetActive(false);
             hintText.text = hint;
         }
     }
@@ -65,10 +65,10 @@ public class TestUI : MonoBehaviour
 
     private void Update()
     {
-        if (!hintShown && (Time.time - taskStartTime > hintDelay) && hintText != null && !string.IsNullOrEmpty(hintText.text))
+        if ( !hintShown && (Time.time - taskStartTime > hintDelay) && hintText != null &&  !string.IsNullOrEmpty(hintText.text))
         {
-            hintText.gameObject.SetActive(true);
-            hintShown = true;
+             hintText.gameObject.SetActive(true);
+             hintShown = true;
         }
     }
 }

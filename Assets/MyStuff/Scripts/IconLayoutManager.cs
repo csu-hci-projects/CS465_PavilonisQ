@@ -5,8 +5,8 @@ public class IconLayoutManager : MonoBehaviour
     [System.Serializable]
     public class IconLayout
     {
-        public string layoutName;
-        public IconPosition[] iconPositions;
+         public string layoutName;
+         public IconPosition[] iconPositions;
     }
 
     [System.Serializable]
@@ -24,7 +24,7 @@ public class IconLayoutManager : MonoBehaviour
         if (layoutIndex < 0 || layoutIndex >= layouts.Length)
             return;
 
-        IconLayout layout = layouts[layoutIndex];
+        IconLayout layout =  layouts[layoutIndex];
 
         foreach (IconPosition iconPos in layout.iconPositions)
         {
@@ -43,7 +43,7 @@ public class IconLayoutManager : MonoBehaviour
         if (layouts[layoutIndex] == null)
             layouts[layoutIndex] = new IconLayout();
 
-        layouts[layoutIndex].layoutName = layoutName;
+         layouts[layoutIndex].layoutName = layoutName;
 
         // grabs all icons in icon container
         int childCount = iconsContainer.childCount;
@@ -53,7 +53,7 @@ public class IconLayoutManager : MonoBehaviour
         for (int i = 0; i < childCount; i++)
         {
             Transform child = iconsContainer.GetChild(i);
-            layouts[layoutIndex].iconPositions[i] = new IconPosition
+            layouts[layoutIndex].iconPositions[i] = new  IconPosition
             {
                 iconName = child.name,
                 position = child.localPosition

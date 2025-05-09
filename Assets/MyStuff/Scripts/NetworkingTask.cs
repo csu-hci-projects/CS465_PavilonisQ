@@ -14,7 +14,7 @@ public class NetworkingTask
     {
         public string sourceDeviceName;
         public string targetDeviceName;
-        public int requiredColorIndex = -1; 
+        public int requiredColorIndex =  -1; 
         public bool completed;
         public bool correctColor;
     }
@@ -25,9 +25,9 @@ public class NetworkingTask
     {
         foreach (RequiredConnection connection in requiredConnections)
         {
-            if (!connection.completed || !connection.correctColor)
+            if (!connection.completed  || !connection.correctColor )
                 return false;
         }
-        return true;
+          return true;
     }
 }

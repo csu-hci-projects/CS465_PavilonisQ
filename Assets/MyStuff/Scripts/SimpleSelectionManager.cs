@@ -15,7 +15,7 @@ public class SimpleSelectionManager : MonoBehaviour
     private GameObject secondSelectedIcon = null;
     private int currentColorIndex = 0;
     private Color currentLineColor = Color.white;
-    private TestTimer testTimer;
+    private TestTimer  testTimer;
     private TestManager testManager;
 
     private class ConnectionInfo
@@ -31,7 +31,7 @@ public class SimpleSelectionManager : MonoBehaviour
             endIcon = end;
         }
 
-        public bool ConnectsIcons(GameObject icon1, GameObject icon2)
+        public bool ConnectsIcons(GameObject icon1, GameObject icon2 )
         {
             return (startIcon == icon1 && endIcon == icon2) ||
                    (startIcon == icon2 && endIcon == icon1);
@@ -60,24 +60,23 @@ public class SimpleSelectionManager : MonoBehaviour
             }
         }
 
+        // grab color palette and set default
         Transform colorPalette = GameObject.Find("ColorPalette")?.transform;
-        if (colorPalette != null)
+        Transform defaultButtonTransform = colorPalette.Find("Color1");
+        if (defaultButtonTransform != null)
         {
-            Transform defaultButtonTransform = colorPalette.Find("Color1");
-            if (defaultButtonTransform != null)
+            ColorButton defaultButton = defaultButtonTransform.GetComponent<ColorButton>();
+            if (defaultButton != null)
             {
-                    ColorButton defaultButton = defaultButtonTransform.GetComponent<ColorButton>();
-                    if (defaultButton != null)
-                    {
-                        currentLineColor = defaultButton.GetButtonColor();
-                        defaultButton.ForceSelection(new Vector3(0.4441015f, 0.409564f, 0.01f)); // position of the WAN button (default selected color button)
-                    }
+                 currentLineColor = defaultButton.GetButtonColor();
+                 defaultButton.SetAsDefault();
             }
         }
+        
      }
 
 
-    private void OnIconSelected(SelectEnterEventArgs args)
+    private void OnIconSelected( SelectEnterEventArgs args)
     {
         GameObject selectedObject = args.interactableObject.transform.gameObject;
 
@@ -91,12 +90,6 @@ public class SimpleSelectionManager : MonoBehaviour
         {
             firstSelectedIcon = selectedObject;
             AddOutline(firstSelectedIcon);
-
-            // record first device select
-            if (testTimer != null)
-            {
-                testTimer.RecordConnectionFirstDevice(selectedObject.name);
-            }
         }
         // check if selecting same icon as first, deselect if so
         else if (selectedObject == firstSelectedIcon)
@@ -146,12 +139,6 @@ public class SimpleSelectionManager : MonoBehaviour
         else
         {
             CreateConnection(firstSelectedIcon, secondSelectedIcon);
-
-            if (testTimer != null)
-            {
-                testTimer.RecordConnectionSecondDevice(firstSelectedIcon.name, secondSelectedIcon.name,
-                                                  currentColorIndex);
-            }
         }
 
         // remove highlight on first selected
@@ -178,9 +165,9 @@ public class SimpleSelectionManager : MonoBehaviour
     }
 
 
-    private ConnectionInfo FindConnection(GameObject icon1, GameObject icon2)
+    private ConnectionInfo FindConnection(GameObject icon1, GameObject icon2 )
     {
-        foreach (ConnectionInfo connection in connections)
+        foreach (ConnectionInfo connection in connections )
         {
             if (connection.ConnectsIcons(icon1, icon2))
             {
@@ -209,15 +196,15 @@ public class SimpleSelectionManager : MonoBehaviour
         LineRenderer lineRenderer = lineObj.GetComponent<LineRenderer>();
         //position
         lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(0, fromIcon.transform.position);
+        lineRenderer.SetPosition(0,  fromIcon.transform.position);
         lineRenderer.SetPosition(1, toIcon.transform.position);
         //color
         lineRenderer.startColor = currentLineColor;
         lineRenderer.endColor = currentLineColor;
         // connection
-        ConnectionInfo newConnection = new ConnectionInfo(lineObj, fromIcon, toIcon);
+        ConnectionInfo newConnection =  new ConnectionInfo(lineObj, fromIcon, toIcon);
         connections.Add(newConnection);
-        testManager.CheckTestProgress(fromIcon, toIcon, currentColorIndex);
+        testManager.CheckTestProgress(fromIcon,  toIcon, currentColorIndex);
     }
 
 
@@ -225,11 +212,6 @@ public class SimpleSelectionManager : MonoBehaviour
 {
     currentLineColor = color;
     currentColorIndex = colorIndex;
-    
-    if (testTimer != null && colorIndex >= 0)
-    {
-        testTimer.RecordColorNameForCSV(colorIndex);
-    }
 }
 
 
