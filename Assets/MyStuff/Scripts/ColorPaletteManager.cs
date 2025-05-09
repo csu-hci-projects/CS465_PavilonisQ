@@ -112,6 +112,8 @@ public class ColorPaletteManager : MonoBehaviour
         ColorButton.UpdateSelectedButtonColor();
     }
 
+
+    #if ENABLE_INPUT_SYSTEM
     void Update() // USE KEYBOARD 1-4 to change palette for tetsting
     {
         if (Keyboard.current != null)
@@ -134,6 +136,7 @@ public class ColorPaletteManager : MonoBehaviour
             }
         }
     }
+    #endif
     public string GetCurrentPaletteName()
     {
         if (currentPaletteIndex >= 0 && currentPaletteIndex < colorPalettes.Count)
